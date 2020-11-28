@@ -1,0 +1,23 @@
+.title-bar {
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.title-bar > * {
+    margin: 15px 10px;
+}
+
+.content-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.content-container > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-container > div > * {
+    margin: 10px;
+}
