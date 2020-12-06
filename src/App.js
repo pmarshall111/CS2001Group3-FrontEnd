@@ -3,12 +3,14 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import PharmacyPage from "./pharmacy/PharmacyPage";
+import EmailPreview from "./email/EmailPreview";
+import EmailPage from "./email/EmailPage";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <PharmacyPage />
+        <EmailPage></EmailPage>
       </header>
     </div>
   );
