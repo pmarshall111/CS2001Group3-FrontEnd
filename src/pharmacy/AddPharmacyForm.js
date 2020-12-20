@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 const AddPharmacyForm = (props) => {
     const submit = e => {
         e.preventDefault();
-        const formData = new FormData(e.target);
+        const formData = new FormData(e.target.form);
         const formDataObj = Object.fromEntries(formData.entries());
         console.log({formData, formDataObj});
         // props.handleSubmission
