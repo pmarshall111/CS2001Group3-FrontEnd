@@ -11,35 +11,16 @@ import {backendUrl} from "../config";
 class PharmacyPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {pharmacies: [], showForm: false};
-    }
-
-    componentDidMount() {
-        this.getDataFromDb();
-    }
-
-    getDataFromDb() {
-        fetch(`${backendUrl}/pharmacy`)
-            .then(response => response.text())
-            .then(response => {
-                console.log(JSON.parse(response))
-                this.setState({pharmacies: JSON.parse(response)})
-            })
-    }
-
-    handleSubmission() {
-        fetch(`${backendUrl}/pharmacy`, {method: "POST", body: "", headers: {"Content-Type": "application/json"}})
-            .then(response => this.getDataFromDb());
-        this.setState({showForm: false})
+        this.state = {showForm: false};
     }
 
     render() {
-        let {pharmacies, showForm} = this.state;
+        let {pharmacies, careHomeId} = this.props;
+        let {showForm} = this.state;
         let pharmacyPreviews = pharmacies.map((pharmacy,idx) =>
             <PharmacyPreview title={pharmacy.name} isDefault={pharmacy.default}
                              hasPhone={pharmacy.phoneNumb} hasEmail={pharmacy.email}
-                             hasAddress={pharmacy.address && pharmacy.address.length>0} key={idx} />
-                             );
+                             hasAddress={pharmacy.address && pharmacy.address.length>0} key={idx} /> );
 
         return (
             <main>
@@ -49,7 +30,12 @@ class PharmacyPage extends React.Component {
                 <div className={"list"}>
                     {pharmacyPreviews}
                 </div>
-                {showForm && <AddPharmacyForm show={showForm} handleClose={() => this.setState({showForm: false})} handleSubmission={() => this.handleSubmission()} />}
+                {showForm && <AddPharmacyForm
+                    show={showForm}
+                    handleClose={() => this.setState({showForm: false})}
+                    handleSubmission={() => this.setState({showForm: false})}
+                    careHomeId={this.props.careHomeId}
+                />}
             </main>
         );
     }
