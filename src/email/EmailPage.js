@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 
 import "./EmailPage.css";
 
-import {backendUrl, authHeader} from "../config";
+import {backendUrl} from "../config";
 import EmailPreview from "./EmailPreview";
 
 class EmailPage extends React.Component {
@@ -19,14 +19,7 @@ class EmailPage extends React.Component {
     }
 
     getDataFromDb() {
-        const options = {
-            withCredentials: true,
-            method: 'GET',
-            headers: {
-                'Authorization': authHeader
-            }
-        }
-        fetch(`http://${backendUrl}/email?careHomeName=abc`, options)
+        fetch(`http://${backendUrl}/email?careHomeName=abc`)
             .then(response => response.text())
             .then(response => {
                 console.log(JSON.parse(response))

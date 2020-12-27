@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 import "./PharmacyPage.css";
 import AddPharmacyForm from "./AddPharmacyForm";
-import {backendUrl, authHeader} from "../config";
+import {backendUrl} from "../config";
 
 class PharmacyPage extends React.Component {
     constructor(props) {
@@ -19,14 +19,7 @@ class PharmacyPage extends React.Component {
     }
 
     getDataFromDb() {
-        const options = {
-            withCredentials: true,
-            method: 'GET',
-            headers: {
-                'Authorization': authHeader
-            }
-        }
-        fetch(`${backendUrl}/pharmacy`, options)
+        fetch(`${backendUrl}/pharmacy`)
             .then(response => response.text())
             .then(response => {
                 console.log(JSON.parse(response))
