@@ -1,12 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import PharmacyPage from "./pharmacy/PharmacyPage";
-import EmailPreview from "./email/EmailPreview";
 import EmailPage from "./email/EmailPage";
 import EmailConfirmation from "./email/EmailConfirmation";
 import EmailInquiry from "./email/EmailInquiry";
@@ -16,14 +14,17 @@ import {backendUrl} from "./config";
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {pharmacies:[], careHome:{careHomeName: "abc", id: 1}}
+        this.state = {
+            pharmacies:[],
+            careHome:{name: "abc", id: 1, email:"abc@aol.com"},
+            careHomeWorker:"Peter"}
     }
 
     componentDidMount() {
         fetch(`${backendUrl}/pharmacy?careHomeId=${this.state.careHome.id}`)
             .then(response => response.text())
             .then(response => {
-                console.log(JSON.parse(response))
+                console.log({pharmacies: JSON.parse(response)})
                 this.setState({pharmacies: JSON.parse(response)})
         })
     }
@@ -37,7 +38,14 @@ class App extends React.Component {
                 <Route path="/pharmacy" render={(props) =>
                     <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id} />
                 } />
-                <Route path="/alerts" component={AlertsPage} />
+                <Route path="/alerts" render={(props) =>
+                    <AlertsPage {...props}
+                                careHomeName={this.state.careHome.name}
+                                careHomeWorker={this.state.careHomeWorker}
+                                careHomeEmail={this.state.careHome.email}
+                                careHomeId={this.state.careHome.id}
+                    />
+                } />
             </Router>
         );
     }

@@ -14,7 +14,7 @@ const AlertItem = (props) => {
                 <h4>{props.timeTillCycleEnd}</h4>
             </div>
             <div className={"alert-btn-container"}>
-                <Button>Send email to Pharmacy</Button>
+                <Button onClick={() => props.sendEmail()}>Send email to Pharmacy</Button>
             </div>
         </div>
     );
