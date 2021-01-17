@@ -35,5 +35,13 @@
 }
 
 .email-container button {
-    padding: 20px 0
+    padding: 20px 0;
+    margin: 10px;
+}
+
+.buttons-container {
+    grid-row: 2 /4;
+    height: 100%;
+    display: grid;
+    align-items: center;
 }

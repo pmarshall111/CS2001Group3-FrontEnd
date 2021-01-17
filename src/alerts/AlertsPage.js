@@ -16,13 +16,13 @@ class AlertsPage extends React.Component {
                     "medicationName": "IbuProfen",
                     "residentName": "Irene Wilder",
                     "cycleEndDate": "12-05-20",
-                    "pharmacyEmail": "farmacie@hotmail.com"
+                    "pharmacyEmail": "pmarshall.dev@gmail.com"
                 },
                 {
                     "medicationName": "Paracetamol",
                     "residentName": "Gerald",
                     "cycleEndDate": "15-09-23",
-                    "pharmacyEmail": "pharmacy@aol.com"
+                    "pharmacyEmail": "pmarshall.dev@gmail.com"
                 }],
             usesAutomaticEmails: false
         }
@@ -36,7 +36,7 @@ class AlertsPage extends React.Component {
 
     sendEmail(medicationName, residentName, cycleEndDate, pharmacyEmail) {
         const {careHomeName, careHomeWorker, careHomeEmail} = this.props;
-        const backendData = {medicationName, residentName, cycleEndDate, pharmacyEmail, careHomeName, careWorkerName: careHomeWorker, careHomeEmail}
+        const backendData = {medicationName, residentName, cycleEndDate, pharmacyEmail, careHomeName, careWorkerName: careHomeWorker, careHomeEmail, usersName: careHomeName}
         fetch(`${backendUrl}/email`,
             {method: "POST", body: JSON.stringify(backendData), headers: {"Content-Type": "application/json"}});
     }

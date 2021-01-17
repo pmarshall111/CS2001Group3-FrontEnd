@@ -8,6 +8,9 @@ import "./EmailPage.css";
 import {backendUrl} from "../config";
 import EmailPreview from "./EmailPreview";
 
+import {READY, ASKED_IF_READY, SENT_INITIAL_EMAIL, PROCESSING, INQUIRY} from "./EmailStatusCategories";
+
+
 class EmailPage extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +22,7 @@ class EmailPage extends React.Component {
     }
 
     getDataFromDb() {
-        fetch(`http://${backendUrl}/email?careHomeName=abc`)
+        fetch(`${backendUrl}/email?careHomeName=abc`)
             .then(response => response.text())
             .then(response => {
                 console.log(JSON.parse(response))
@@ -36,8 +39,8 @@ class EmailPage extends React.Component {
         // ]
         let emailPreviews = emails.filter(x => emailType == "all" || x.status == emailType)
             .map((email,idx) =>
-            <EmailPreview resident={email.residentName} medication={email.medicationName} pharmacy={email.pharmacyName}
-                          dateSent={email.dateSent} dateResponded={email.dateResponded} status={email.status} key={idx} />
+            <EmailPreview resident={email.residentName} medication={email.medicationName} pharmacy={email.pharmacyEmail} dateLastEmailSent={email.dateLastEmailSent}
+                          dateResponded={email.dateUpdatedByPharmacy} dateMedicationToBeReady={email.dateMedicationToBeReady} inquiryComment={email.pharmacyComment} status={email.status} key={idx} />
         );
 
         return (
@@ -49,9 +52,11 @@ class EmailPage extends React.Component {
                         this.setState({emailType: e.target.value.toLowerCase()})}
                     } >
                         <option>All</option>
-                        <option>Accepted</option>
-                        <option>Unresponded</option>
-                        <option>Rejected</option>
+                        <option>{SENT_INITIAL_EMAIL}</option>
+                        <option>{PROCESSING}</option>
+                        <option>{INQUIRY}</option>
+                        <option>{ASKED_IF_READY}</option>
+                        <option>{READY}</option>
                     </Form.Control>
                 </TitleBar>
                 <div className={"list"}>

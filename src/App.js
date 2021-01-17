@@ -10,6 +10,7 @@ import EmailConfirmation from "./email/EmailConfirmation";
 import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
 import {backendUrl} from "./config";
+import EmailReadyForCollection from "./email/EmailReadyForCollection";
 
 class App extends React.Component {
     constructor(props) {
@@ -33,8 +34,9 @@ class App extends React.Component {
         return (
             <Router>
                 <Route exact path="/" component={EmailPage} />
-                <Route path="/email/confirmation" component={EmailConfirmation} />
+                <Route path="/email/set-date" component={EmailConfirmation} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
+                <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
                 <Route path="/pharmacy" render={(props) =>
                     <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id} />
                 } />
