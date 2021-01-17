@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import {Link, Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import Audit from "./medication/audit/Audit";
 import ViewAudit from "./medication/viewAudit/ViewAudit";
-import AddMedication from "./medication/medicationLog/AddMedication";
+import AddMedication from "./medication/medication/AddMedication";
 import AddAudit from "./medication/audit/AddAudit";
 import './App.css';
 
