@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component, useEffect, useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactDOM from 'react-dom'
 
 class AddAudit extends React.Component {
@@ -74,7 +75,7 @@ class AddAudit extends React.Component {
             <div className="col-md-8">
               <h1 className="display-4 text-center">Add Audit</h1>
               <form className="d-flex flex-column">
-                <legend className="text-center">Add-Update-Delete Audit</legend>
+                <legend className="text-center">Add Audit</legend>
 
                 <label htmlFor="name">
                   Patient Name:
