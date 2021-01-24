@@ -27,7 +27,7 @@ const EmailReadyForCollection = (props) => {
     }, []); //adding empty array here to ensure that useEffect only fires once. the func tests whether it should fire by testing whether this arg has changed
 
     const submit = e => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         fetch(`${backendUrl}/email/ready-for-collection`, {method: "POST", body: JSON.stringify({comment,requestId}), headers: {"Content-Type": "application/json"}})
             .then(response => response.json())
             .then(r => {
@@ -43,23 +43,14 @@ const EmailReadyForCollection = (props) => {
         Medication: medication
     }
 
-    if (!isSubmitted) {
-        return (
-            <FullPageCentered background={"#DCFFFB"} >
-                <h2>Medication is ready to Collect!</h2>
-                <List items={inquiryDetails} />
-                <Button variant="primary" onClick={e => submit(e)}>
-                    The care home can collect the medication!
-                </Button>
-            </FullPageCentered>
-        );
-    } else {
-        return (
-            <FullPageCentered>
-                <h3>{careHomeName} will be notified that {medication} is ready to collect!</h3>
-            </FullPageCentered>
-        )
-    }
+    //automatically submitting.
+    submit();
+
+    return (
+        <FullPageCentered>
+            <h3>{careHomeName} will be notified that {medication} is ready to collect now!</h3>
+        </FullPageCentered>
+    )
 }
 
 export default EmailReadyForCollection;

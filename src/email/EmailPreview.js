@@ -1,42 +1,74 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 
-import {READY, ASKED_IF_READY, SENT_INITIAL_EMAIL, PROCESSING, INQUIRY} from "./EmailStatusCategories";
+import {READY, ASKED_IF_READY, SENT_INITIAL_EMAIL, PROCESSING, INQUIRY, COMPLETE} from "./EmailStatusCategories";
 
 import "./EmailPreview.css";
+import {backendUrl} from "../config";
+import {dateIsYesterdayOrEarlier} from "../helper/dateHelper";
 
 const EmailPreview = (props) => {
+    const {resident, status, medication, pharmacy, dateLastEmailSent, dateResponded, dateMedicationToBeReady, inquiryComment,nonGuessableId} = props;
+
     let backgroundColour;
-    if (props.status === READY ) {
+    if (status === READY ) {
         backgroundColour = "green";
-    } else if (props.status === ASKED_IF_READY) {
+    } else if (status === ASKED_IF_READY) {
         backgroundColour = "paleturquoise";
-    } else if (props.status === SENT_INITIAL_EMAIL) {
+    } else if (status === SENT_INITIAL_EMAIL) {
         backgroundColour = "lightyellow";
-    } else if (props.status === PROCESSING) {
+    } else if (status === PROCESSING) {
         backgroundColour = "cyan";
-    } else if (props.status === INQUIRY) {
+    } else if (status === INQUIRY) {
         backgroundColour = "red";
+    } else if (status === COMPLETE) {
+        backgroundColour = "grey";
     }
 
-    const buttons = props.status !== READY ? (<div className={"buttons-container"}> <Button variant="primary" block size={"lg"}>View Email</Button>
-        <Button variant="secondary" block size={"lg"}>Resend</Button></div>) :
-        <div className={"buttons-container"}><Button variant={"primary"}>Mark Complete!</Button></div>
+    const tryResendEmail = () => {
+        fetch(`${backendUrl}/email/resend?id=${nonGuessableId}`)
+            .then(r => r.json());
+    }
 
-    const lastEmailSentDate = new Date(props.dateLastEmailSent).toUTCString();
-    const pharmacyResponded = !props.dateResponded ? "-" : new Date(props.dateResponded).toUTCString();
-    const readyDate = !props.dateMedicationToBeReady ? "-" : new Date(props.dateMedicationToBeReady).toDateString();
+    const markCollected = () => {
+        fetch(`${backendUrl}/email/collected?id=${nonGuessableId}`)
+            .then(r => r.json());
+    }
+
+    const undoMarkCollected = () => {
+        fetch(`${backendUrl}/email/undo-collected?id=${nonGuessableId}`)
+            .then(r => r.json());
+    }
+
+    const lastEmailSentDate = new Date(dateLastEmailSent).toUTCString();
+    const pharmacyResponded = !dateResponded ? "-" : new Date(dateResponded).toUTCString();
+    const readyDate = !dateMedicationToBeReady ? "-" : new Date(dateMedicationToBeReady).toDateString();
+    const canResend = dateIsYesterdayOrEarlier(new Date(dateLastEmailSent));
+
+    let buttons;
+    if (status === COMPLETE) {
+        buttons = <div className={"buttons-container"}><Button onClick={() => undoMarkCollected()} variant={"primary"}>Oops - not yet collected!</Button></div>
+    } else if (status === READY) {
+        buttons = <div className={"buttons-container"}><Button onClick={() => markCollected()} variant={"primary"}>I've collected this!</Button></div>
+    } else {
+        buttons = (
+            <div className={"buttons-container"}>
+                <Button onClick={() => props.showEmailContent()} variant="primary" block size={"lg"}>View Email</Button>
+                <Button onClick={() => canResend ? tryResendEmail() : null} variant="secondary" block size={"lg"}
+                        disabled={!canResend}>Resend</Button>
+            </div>)
+    }
 
     return (
         <div className={`email-container`} style={{"backgroundColor": backgroundColour}}>
-            <div className={"email-status"}>{props.status.charAt(0).toUpperCase() + props.status.slice(1)}</div>
+            <div className={"email-status"}>{status.charAt(0).toUpperCase() + status.slice(1)}</div>
             <div className={"email-data"}>
-                <p>Resident: </p><p>{props.resident}</p>
-                <p>Medication: </p><p>{props.medication}</p>
-                <p>Pharmacy: </p><p>{props.pharmacy}</p>
+                <p>Resident: </p><p>{resident}</p>
+                <p>Medication: </p><p>{medication}</p>
+                <p>Pharmacy: </p><p>{pharmacy}</p>
                 <p>Last email sent: </p><p>{lastEmailSentDate}</p>
                 <p>Pharmacy Responded: </p><p>{pharmacyResponded}</p>
-                <p>{props.status === INQUIRY ? "Inquiry comment: " : "Date ready: "}</p><p>{props.status === INQUIRY ? props.inquiryComment : readyDate}</p>
+                <p>{status === INQUIRY ? "Inquiry comment: " : "Date ready: "}</p><p>{status === INQUIRY ? inquiryComment : readyDate}</p>
             </div>
             {buttons}
         </div>

@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import PharmacyPage from "./pharmacy/PharmacyPage";
 import EmailPage from "./email/EmailPage";
-import EmailConfirmation from "./email/EmailConfirmation";
+import EmailSetDate from "./email/EmailSetDate";
 import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
 import {backendUrl} from "./config";
@@ -34,7 +34,7 @@ class App extends React.Component {
         return (
             <Router>
                 <Route exact path="/" component={EmailPage} />
-                <Route path="/email/set-date" component={EmailConfirmation} />
+                <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
                 <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
                 <Route path="/pharmacy" render={(props) =>
