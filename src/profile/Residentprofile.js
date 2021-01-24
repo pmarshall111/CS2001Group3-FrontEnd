@@ -19,7 +19,10 @@ const Residentprofile = (props) => {
                         <img src="https://picsum.photos/200" class="img-thumbnail" alt="..."></img>
                         <h1>John Doe</h1>
                         <h3>D.O.B:23/02/1937</h3>
-                        <h3>Alergies:Nut's</h3>      
+                        <h3>Alergies:Nut's</h3> 
+                        <h3>Guardian: Jane Doe</h3>
+                        <h3>Contact Number: 02089991273</h3> 
+                        <h3>E-mail:example@hotmail.co.uk</h3>  
                     </div>
                     <div class="col-md-6">
                         <h1>Notes</h1>

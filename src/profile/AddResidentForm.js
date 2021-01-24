@@ -28,6 +28,10 @@ const AddResidentForm = (props) => (
                     <Form.Label>Address</Form.Label>
                     <Form.Control as="textarea" rows={3} placeholder="Enter address" />
                 </Form.Group>
+                <Form.Group controlId="formAddResidentAddress">
+                    <Form.Label>Notes</Form.Label>
+                    <Form.Control as="textarea" rows={3} placeholder="Enter notes" />
+                </Form.Group>
             </Form>
         </Modal.Body>
         <Modal.Footer>
