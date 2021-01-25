@@ -1,15 +1,16 @@
 {
-  "name": "cs2001group3-frontend",
+  "name": "cs2001_frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.2.2",
-    "bootstrap": "^4.5.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.2",
+    "bootstrap": "^5.0.0-beta1",
     "react": "^17.0.1",
-    "react-bootstrap": "^1.4.0",
-    "react-bootstrap-icons": "^1.1.0",
+    "react-bootstrap": "^1.4.3",
+    "react-bootstrap-icons": "^1.2.3",
+    "react-bootstrap-validation": "^0.1.11",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
