@@ -28,9 +28,9 @@ componentDidMount(){
                           <tr>
                               <th>Description</th>
                                 <th>Dosage</th>
-                                <th>Class</th>
-                                <th>Name</th>
-                                <th>Pharmacy</th>
+                                <th>Medication Class</th>
+                                <th>Medication Name</th>
+                                <th>Pharmacy Name</th>
                                 <th>Count</th>
                           </tr>
                         </tbody>
@@ -41,6 +41,7 @@ componentDidMount(){
                                 this.state.medication.map(
                                     medication=>
                                     <tr key= {medication.id}>
+                                        <td>{medication.medicationDescription}</td>
                                          <td>{medication.dosage}</td>
                                          <td>{medication.medicationClass}</td>
                                         <td>{medication.medicationName}</td>
