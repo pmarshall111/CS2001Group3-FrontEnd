@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import HomePage from "./HomePage";
 import PharmacyPage from "./pharmacy/PharmacyPage";
 import EmailPreview from "./email/EmailPreview";
 import EmailPage from "./email/EmailPage";
@@ -15,7 +15,8 @@ import ListDetailsComponent from "./ListDetailsCompoenet";
 function App() {
   return (
     <div>
-      <ListDetailsComponent />
+      <HomePage />
+      {/*<ListDetailsComponent /> */}
       <Router>
         <Route path="/MedicationDetailsPage" component={ListDetailsComponent} />
         <Route exact path="/" component={EmailPage} />
