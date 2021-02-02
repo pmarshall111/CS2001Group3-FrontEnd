@@ -11,6 +11,8 @@ import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
 import {backendUrl} from "./config";
 import EmailReadyForCollection from "./email/EmailReadyForCollection";
+import Timeline from "./shared/Timeline";
+import ParentTooltip from "./shared/tooltip/ParentTooltip";
 
 class App extends React.Component {
     constructor(props) {
@@ -31,6 +33,32 @@ class App extends React.Component {
     }
 
     render() {
+        const practiceTimelineData = [
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Jimmy"},
+            {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+            {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"},
+            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(20)), resident: "Tom"},
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Rebecca" },
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(16)), resident: "Rebecca" },
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(20)), resident: "Rebecca"}
+        ]
+
+        // const medicationsAtTime = [
+        //     {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+        //     {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+        //     {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+        //     {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"}
+        // ]
+
+        const medicationsAtTime = [
+            {medicationName: "Tylenol", dose: "15ml", time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
+            {medicationName: "Deep Heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Rebecca"}
+        ]
+
         return (
             <Router>
                 <Route exact path="/" component={EmailPage} />
@@ -47,6 +75,11 @@ class App extends React.Component {
                                 careHomeEmail={this.state.careHome.email}
                                 careHomeId={this.state.careHome.id}
                     />
+                } />
+                <Route path="/timeline" render={(props) =>
+                    <div>
+                        <Timeline dosages={practiceTimelineData} />
+                    </div>
                 } />
             </Router>
         );
