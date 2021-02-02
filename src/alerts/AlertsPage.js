@@ -5,6 +5,7 @@ import "./AlertsPage.css"
 import Button from "react-bootstrap/Button";
 import {backendUrl} from "../config";
 import Form from "react-bootstrap/Form";
+import {convertToYYYYMMDD} from "../helper/convertTimestampToDate";
 
 
 //alerts will be for any medication that hasn't had an email request sent off yet.
@@ -15,13 +16,13 @@ class AlertsPage extends React.Component {
             alerts: [{
                     "medicationName": "IbuProfen",
                     "residentName": "Irene Wilder",
-                    "cycleEndDate": "12-05-20",
+                    "cycleEndDate": 1461920400000,
                     "pharmacyEmail": "pmarshall.dev@gmail.com"
                 },
                 {
                     "medicationName": "Paracetamol",
                     "residentName": "Gerald",
-                    "cycleEndDate": "15-09-23",
+                    "cycleEndDate": 1464920400000,
                     "pharmacyEmail": "pmarshall.dev@gmail.com"
                 }],
             usesAutomaticEmails: false
@@ -55,6 +56,9 @@ class AlertsPage extends React.Component {
         fetch(`${backendUrl}/auto-email?careHomeId=${this.props.careHomeId}`)
             .then(resp => resp.json())
             .then(r => this.setState({usesAutomaticEmails: r.usesAutomaticEmails}))
+        fetch(`${backendUrl}/alerts?careHomeId=${this.props.careHomeId}`)
+            .then(resp => resp.json())
+            .then(r => this.setState({alerts: r}))
     }
 
     render() {
@@ -63,7 +67,7 @@ class AlertsPage extends React.Component {
             <AlertItem
                 medicationName={a.medicationName}
                 residentName={a.residentName}
-                timeTillCycleEnd={a.cycleEndDate}
+                timeTillCycleEnd={convertToYYYYMMDD(a.cycleEndDate)}
                 key={`alerts-${idx}`}
                 sendEmail={() => this.sendEmail(a.medicationName, a.residentName, a.cycleEndDate, a.pharmacyEmail)}
             />
