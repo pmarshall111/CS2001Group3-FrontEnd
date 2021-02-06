@@ -11,13 +11,14 @@ import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
 import {backendUrl} from "./config";
 import EmailReadyForCollection from "./email/EmailReadyForCollection";
+import MedicationForm from "./medication/MedicationForm";
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             pharmacies:[],
-            careHome:{name: "abc", id: 1, email:"abc@aol.com"},
+            careHome:{name: "abc", id: 0, email:"abc@aol.com"},
             careHomeWorker:"Peter"}
     }
 
@@ -48,6 +49,7 @@ class App extends React.Component {
                                 careHomeId={this.state.careHome.id}
                     />
                 } />
+                <Route path="/medication-form" render={(props) => <MedicationForm {...props} resId={0} pharmacies={this.state.pharmacies} />} />
             </Router>
         );
     }
