@@ -3,20 +3,26 @@ import React, { Component, useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactDOM from 'react-dom'
 
+
 class AddAudit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       audits: [],
-      name: '',
-      dayCount: '',
-      eveningCount: '',
-      staffId: '',
-      initialMedicationCount: ''
+      isMorningCount: '',
+      countDoneOnDate: '',
+      cyclePredictedToEndOn: '',
+      count: ''
     };
 
     this.create = this.create.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  createAudit = (auditCount) => {
+    this.setState(prevState => ({
+      audits: [prevState.isMorningCount, prevState.countDoneOnDate, prevState.cyclePredictedToEndOn, prevState.count]
+    }));
   }
 //   componentDidMount() {
 //     // get all entities - GET
@@ -46,11 +52,10 @@ class AddAudit extends React.Component {
     "accept": "application/json"
   },
   "body": JSON.stringify({
-    name: this.state.name,
-    dayCount: this.state.dayCount,
-    eveningCount: this.state.eveningCount,
-    initialMedicationCount: this.state.initialMedicationCount,
-    staffId: this.state.staffId
+    isMorningCount: this.state.isMorningCount,
+    countDoneOnDate: this.state.countDoneOnDate,
+    cyclePredictedToEndOn: this.state.cyclePredictedToEndOn,
+    count: this.state.count
   })
 })
 .then(response => response.json())
@@ -67,6 +72,13 @@ class AddAudit extends React.Component {
   handleChange(changeObject) {
     this.setState(changeObject)
   }
+
+  handleReset = () =>{
+    document.querySelectorAll('input');
+    this.setState({
+      audits:[{}]
+    });
+  };
 
   render() {
     return (
@@ -89,42 +101,43 @@ class AddAudit extends React.Component {
                     required
                     />
                 </label>
-                <label htmlFor="dayCount">
-                  Day Count:
+                <label htmlFor="count">
+                  Count:
                   <input
-                    name="dayCount"
-                    id="dayCount"
+                    name="count"
+                    id="count"
                     type="number"
                     className="form-control"
-                    value={this.state.dayCount}
-                    onChange={(e) => this.handleChange({ dayCount: e.target.value })}
+                    value={this.state.count}
+                    onChange={(e) => this.handleChange({ count: e.target.value })}
                     required
                     />
                 </label>
-                <label htmlFor="eveningCount">
-                  Evening Count:
+                <label htmlFor="isMorningCount">
+                  Please tick for Day Count and leave blank for Evening Count:
                   <input
-                    name="eveningCount"
-                    id="eveningCount"
-                    type="number"
+                    name="isMorningCount"
+                    id="isMorningCount"
+                    type="checkbox"
                     className="form-control"
-                    value={this.state.eveningCount}
-                    onChange={(e) => this.handleChange({ eveningCount: e.target.value })}
+                    value={this.state.isMorningCount}
+                    onChange={(e) => this.handleChange({ count: e.target.value })}
+                    required
                     />
                 </label>
-                <label htmlFor="initialMedicationCount">
-                  Initial Medication Count
+                <label htmlFor="countDoneOnDate">
+                  Please enter the date of this Count :
                   <input
-                    name="initialMedicationCount"
-                    id="initialMedicationCount"
-                    type="number"
+                    name="countDoneOnDate"
+                    id="countDoneOnDate"
+                    type="date"
                     className="form-control"
-                    value={this.state.initialMedicationCount}
-                    onChange={(e) => this.handleChange({ initialMedicationCount: e.target.value })}
+                    value={this.state.countDoneOnDate}
+                    onChange={(e) => this.handleChange({ countDoneOnDate: e.target.value })}
                     />
                 </label>
-                <label htmlFor="staffId">
-                  StaffId
+                <label htmlFor="cyclePredictedToEndOn">
+                  This Cycle is predicted to end on:
                   <input
                     name="staffId"
                     id="staffId"
@@ -135,13 +148,21 @@ class AddAudit extends React.Component {
                     />
                 </label>
                 <input type="submit" value="Submit Audit" onClick={(e) => this.create(e)}/>
+                <input type="reset" value="Reset Audit" />
               </form>
             </div>
           </div>
+
         </div>
+
     );
+
+
   }
 }
+
+
+
 // let domContainer = document.querySelector('#App');
 // ReactDOM.render(<AuditPreview />, domContainer);
 
