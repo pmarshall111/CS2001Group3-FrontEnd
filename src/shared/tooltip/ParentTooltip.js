@@ -23,9 +23,7 @@ const ParentTooltip = (props) => {
     //else render a list of the residents where you can view each of their medications.
     const numbResidents = Object.keys(residentMeds).length;
     let content;
-    if (numbResidents === 1) {
-        content = <MedTooltip medications={residentMeds[Object.keys(residentMeds)[0]]} />
-    } else if (numbResidents !== 0) {
+    if (numbResidents !== 0) {
         content = <ResidentTooltip residentDict={residentMeds} />
     }
 

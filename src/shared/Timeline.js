@@ -10,7 +10,10 @@ const Timeline = (props) => {
     const {dosages} = props;
     const width = 1000;
     const height = 200;
-    const roundToNearestMins = 15;
+    const roundToNearestMins = 60;
+    const msBeforePopoverVanish = 250;
+
+    console.log(dosages)
 
     let time = new Date().getTime(); //not using state here as D3 won't view updated state...?
     const [medsForTime, setMedsForTime] = useState([]);
@@ -42,9 +45,10 @@ const Timeline = (props) => {
 
     useEffect(() => {
         draw();
-    }, dosages)
+    }, [dosages])
 
     const draw = () => {
+        console.log("DRAWING")
         //first step should be we need to massage the data into a form we can use for our timeline.
         //would like to have things grouped by hour. so go through the data and group it into objects by time.
         const timedObjects = {};
@@ -67,9 +71,6 @@ const Timeline = (props) => {
         const rectWidth = getRectWidth(xScale, roundToNearestMins);
         const rectHeight = height/4;
 
-        console.log(data)
-        console.log({time: data[0][0].roundedTime, x: xScale(data[0][0].roundedTime)})
-        console.log(new Date(new Date().toDateString()))
 
         let selection = svg.selectAll("rect")
             .data(data)
@@ -92,7 +93,7 @@ const Timeline = (props) => {
             })
             .on("mouseout", () => {
                 clearAllTimeouts();
-                setLastTimeoutId(setTimeout(() => setIsHovered(false), 1000));
+                setLastTimeoutId(setTimeout(() => setIsHovered(false), msBeforePopoverVanish));
                 time = 0;
             });
     }
@@ -118,7 +119,7 @@ const Timeline = (props) => {
                             }}
                            startHideTimer={() => {
                                 clearAllTimeouts();
-                               setLastTimeoutId(setTimeout(() => setIsHovered(false), 1000));
+                               setLastTimeoutId(setTimeout(() => setIsHovered(false), msBeforePopoverVanish));
                            }}
                            xPos={targetX}
                            yPos={targetY}

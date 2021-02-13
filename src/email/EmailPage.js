@@ -23,7 +23,7 @@ class EmailPage extends React.Component {
     }
 
     getDataFromDb() {
-        fetch(`${backendUrl}/email?careHomeId=1`)
+        fetch(`${backendUrl}/email?careHomeId=0`)
             .then(response => response.text())
             .then(response => {
                 console.log(JSON.parse(response))

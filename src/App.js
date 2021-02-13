@@ -20,7 +20,9 @@ class App extends React.Component {
         this.state = {
             pharmacies:[],
             careHome:{name: "abc", id: 1, email:"abc@aol.com"},
-            careHomeWorker:"Peter"}
+            careHomeWorker:"Peter",
+            medicationDoses: []
+        }
     }
 
     componentDidMount() {
@@ -30,6 +32,27 @@ class App extends React.Component {
                 console.log({pharmacies: JSON.parse(response)})
                 this.setState({pharmacies: JSON.parse(response)})
         })
+
+        fetch(`${backendUrl}/medication/schedule/?residentId=1`)
+            .then(r => r.json())
+            .then(r => {
+                console.log(r)
+                const dosages = r.map(x => {
+                    return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
+                })
+                this.setState({medicationDoses: dosages})
+            })
+
+        // fetch(`${backendUrl}/medication/schedule/all/?careHomeId=0`)
+        //     .then(r => r.json())
+        //     .then(r => {
+        //         console.log(r)
+        //         const dosages = r.map(x => {
+        //             return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
+        //         })
+        //         this.setState({medicationDoses: dosages})
+        //     })
+
     }
 
     render() {
@@ -78,7 +101,7 @@ class App extends React.Component {
                 } />
                 <Route path="/timeline" render={(props) =>
                     <div>
-                        <Timeline dosages={practiceTimelineData} />
+                        <Timeline dosages={this.state.medicationDoses} />
                     </div>
                 } />
             </Router>
