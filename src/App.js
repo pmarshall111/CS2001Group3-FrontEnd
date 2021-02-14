@@ -33,15 +33,15 @@ class App extends React.Component {
                 this.setState({pharmacies: JSON.parse(response)})
         })
 
-        fetch(`${backendUrl}/medication/schedule/?residentId=1`)
-            .then(r => r.json())
-            .then(r => {
-                console.log(r)
-                const dosages = r.map(x => {
-                    return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
-                })
-                this.setState({medicationDoses: dosages})
-            })
+        // fetch(`${backendUrl}/medication/schedule/?residentId=1`)
+        //     .then(r => r.json())
+        //     .then(r => {
+        //         console.log(r)
+        //         const dosages = r.map(x => {
+        //             return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
+        //         })
+        //         this.setState({medicationDoses: dosages})
+        //     })
 
         // fetch(`${backendUrl}/medication/schedule/all/?careHomeId=0`)
         //     .then(r => r.json())
@@ -85,6 +85,8 @@ class App extends React.Component {
         return (
             <Router>
                 <Route exact path="/" component={EmailPage} />
+
+                <Route exact path="/email" component={EmailPage} />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
                 <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
