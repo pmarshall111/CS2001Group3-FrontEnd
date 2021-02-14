@@ -8,24 +8,26 @@ import { backendUrl } from "../config";
 //Modal is used to have a pop-up box
 //Form.Group controlId= is used for accessibility apparently https://react-bootstrap.github.io/components/forms/
 
-const AddResidentForm = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [surName, setSurName] = useState("");
-    const [age, setAge] = useState("");
+const EditResidentForm = (props) => {
+    const [firstName, setFirstName] = useState();
+    const [surName, setSurName] = useState();
+    const [age, setAge] = useState();
+    let residentId = props.resId;
+    const [guardianName, setGuardianName] = useState();
     const [bio, setBio] = useState("");
-    const [guardianName, setGuardianName] = useState("");
+
 
     const submit = e => {
         e.preventDefault();
-        const data = { firstName, surName, guardianName, age, bio }
+        const data = { firstName, surName, guardianName, age, residentId, bio }
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
+        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
         props.handleSubmission();
     }
 
     return (
         <Modal show={props.show} onHide={props.handleClose}>
-            <Modal.Header><Modal.Title>Add new resident</Modal.Title></Modal.Header>
+            <Modal.Header><Modal.Title>Edit resident</Modal.Title></Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group controlId="formFirstName">
@@ -48,7 +50,7 @@ const AddResidentForm = (props) => {
                     </Form.Group>
                     <Form.Group controlId="formAge">
                         <Form.Label>Age</Form.Label>
-                        <Form.Control type="number" placeholder="Enter numb"
+                        <Form.Control type="number" placeholder="Enter Age"
                             onChange={e => setAge(e.target.value)} value={age}
                         />
                     </Form.Group>
@@ -63,7 +65,7 @@ const AddResidentForm = (props) => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={e => submit(e)}>
-                        Add new resident
+                        Edit resident
                     </Button>
                 </Form>
             </Modal.Body>
@@ -71,4 +73,4 @@ const AddResidentForm = (props) => {
     );
 }
 
-export default AddResidentForm;
+export default EditResidentForm;
