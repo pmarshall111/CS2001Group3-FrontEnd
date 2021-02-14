@@ -23,7 +23,7 @@ class EmailPage extends React.Component {
     }
 
     getDataFromDb() {
-        fetch(`${backendUrl}/email?careHomeId=1`)
+        fetch(`${backendUrl}/email?careHomeId=0`)
             .then(response => response.text())
             .then(response => {
                 console.log(JSON.parse(response))
@@ -50,6 +50,7 @@ class EmailPage extends React.Component {
         //     {residentName: "Mary Whippersville", medicationName:"IbuProfen 20 tablets 25g", pharmacyName:"Croyden corner", dateSent:"02-12-20 12:34", dateResponded: null, status:"accepted"},
         //     {residentName: "Guy from trainspotting", medicationName:"1kg heroin", pharmacyName:"Croyden corner", dateSent:"02-12-20 12:34", dateResponded: null, status:"rejected"}
         // ]
+        console.log(emails)
         let emailPreviews = emails.filter(x => emailType == "All" || x.status == emailType)
             .map((email,idx) =>
             <EmailPreview resident={email.residentName} medication={email.medicationName} pharmacy={email.pharmacyEmail} dateLastEmailSent={email.dateLastEmailSent}
