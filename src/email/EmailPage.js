@@ -15,11 +15,16 @@ import ShowEmailContent from "./ShowEmailContent";
 class EmailPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {emailType:"All", emails: [], emailHtml: "", showEmailHtml: ""};
+        this.state = {emailType:"All", emails: [], emailHtml: "", showEmailHtml: "", intervalId: -1};
     }
 
     componentDidMount() {
         this.getDataFromDb();
+        this.setState({intervalId: setInterval(() => this.getDataFromDb(), 30000)}) //check email state every 30 seconds
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
     }
 
     getDataFromDb() {

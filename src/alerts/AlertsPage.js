@@ -25,7 +25,8 @@ class AlertsPage extends React.Component {
                     "cycleEndDate": 1464920400000,
                     "pharmacyEmail": "pmarshall.dev@gmail.com"
                 }],
-            usesAutomaticEmails: false
+            usesAutomaticEmails: false,
+            intervalId: -1
         }
     }
 
@@ -56,10 +57,20 @@ class AlertsPage extends React.Component {
         fetch(`${backendUrl}/auto-email?careHomeId=${this.props.careHomeId}`)
             .then(resp => resp.json())
             .then(r => this.setState({usesAutomaticEmails: r.usesAutomaticEmails}))
+        this.getAlertsFromDb();
+        this.setState({intervalId: setInterval(() => this.getAlertsFromDb(), 60000)}) //check every minute
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
+    }
+
+    getAlertsFromDb() {
         fetch(`${backendUrl}/alerts?careHomeId=${this.props.careHomeId}`)
             .then(resp => resp.json())
             .then(r => this.setState({alerts: r}))
     }
+
 
     render() {
         const { alerts } = this.state;
