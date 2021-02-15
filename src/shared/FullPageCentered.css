@@ -1,0 +1,15 @@
+.full-page-centered {
+    display:grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.full-page-centered > div {
+    display: grid;
+    place-items: center;
+    grid-gap: 50px;
+}
+
+.full-page-centered button {
+    width: 100%;
+}

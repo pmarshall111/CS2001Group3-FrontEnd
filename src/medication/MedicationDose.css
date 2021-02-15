@@ -1,0 +1,18 @@
+.dose-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border: 2px solid black;
+    margin: 10px;
+}
+
+.close-btn-container {
+    grid-column: 1 / span 2;
+    display: grid;
+    align-items: end;
+    justify-items: end;
+}
+
+.dose-container > *:nth-child(even) {
+    align-self: center;
+    padding-right: 2px;
+}
