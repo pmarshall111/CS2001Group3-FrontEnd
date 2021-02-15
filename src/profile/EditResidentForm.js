@@ -14,7 +14,7 @@ const EditResidentForm = (props) => {
     const [age, setAge] = useState();
     let residentId = props.resId;
     const [guardianName, setGuardianName] = useState();
-    const [bio, setBio] = useState("");
+    const [bio, setBio] = useState();
 
 
     const submit = e => {

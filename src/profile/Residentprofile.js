@@ -3,18 +3,29 @@ import TitleBar from "../shared/TitleBar";
 import Button from "react-bootstrap/Button";
 import "./Residentprofile.css";
 import EditResidentForm from "./EditResidentForm";
+import { backendUrl } from "../config";
+
 
 
 const Residentprofile = (props) => {
     const [editForm, setEditForm] = useState(false);
-    const [archived, setArchive] = useState(props.arch);
+    let archived = props.archived;
+    let residentId = props.resId;
 
+
+    function submit(e) {
+        e.preventDefault();
+        (archived ? archived=false : archived=true);
+        const data = { residentId, archived };
+        console.log(data);
+        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
+        window.location.reload(false);
+    }
     return (
         <main>
             <TitleBar title={"Resident Profile"}>
                 <Button variant="primary" onClick={() => setEditForm(true)}>edit</Button>
-                <Button variant="primary" > medication</Button>
-                <Button variant="primary" onClick={() => {archived? setArchive(false) : setArchive(true)}}>Archive</Button>
+                <Button variant="primary" > medication [coming soon™]</Button>
             </TitleBar>
             <div className="container-fluid">
                 <div className="row align-items-start">
@@ -39,7 +50,7 @@ const Residentprofile = (props) => {
                     handleClose={() => setEditForm(false)} 
                     handleSubmission={() => props.handleSubmission()}
                 />}
-            
+            <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
         </main>
     );
 }

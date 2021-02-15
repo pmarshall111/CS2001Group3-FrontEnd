@@ -9,11 +9,11 @@ import { backendUrl } from "../config";
 //Form.Group controlId= is used for accessibility apparently https://react-bootstrap.github.io/components/forms/
 
 const AddResidentForm = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [surName, setSurName] = useState("");
-    const [age, setAge] = useState("");
-    const [bio, setBio] = useState("");
-    const [guardianName, setGuardianName] = useState("");
+    const [firstName, setFirstName] = useState();
+    const [surName, setSurName] = useState();
+    const [age, setAge] = useState();
+    const [bio, setBio] = useState();
+    const [guardianName, setGuardianName] = useState();
 
     const submit = e => {
         e.preventDefault();
