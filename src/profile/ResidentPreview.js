@@ -14,9 +14,9 @@ const ResidentPreview = (props) => (
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         {props.archived ?
                         // If archived 
-                        <Link to={'/ArchResProf'} className="nav-link"> {props.title} [ARCHIVED]</Link> 
+                        <Link to={'/ArchResProf'} className="nav-link"> {props.firstName} [ARCHIVED]</Link> 
                         // else
-                        : <Link to={'/Residentprofile'} className="nav-link"> {props.title} </Link>
+                        : <Link to={'/Residentprofile'} className="nav-link"> {props.firstName} </Link>
                         }
                 </nav>
                 <Switch>
@@ -25,7 +25,7 @@ const ResidentPreview = (props) => (
                         <Route path='/ArchResProf' component={() => <ArchResProf 
                         handleSubmission={() => props.handleSubmission()} 
                         resId={props.resId}
-                        firstName={props.title}
+                        firstName={props.firstName}
                         archived={props.archived} />} /> 
                         // else
                         : <Route path='/Residentprofile' component={() => <Residentprofile 
@@ -34,7 +34,8 @@ const ResidentPreview = (props) => (
                                                                         bio={props.bio}
                                                                         age={props.age}
                                                                         guardName={props.guardName} 
-                                                                        firstName={props.title}
+                                                                        firstName={props.firstName}
+                                                                        surName={props.surName}
                                                                         archived={props.archived} />} />
                         }
                 </Switch>

@@ -47,6 +47,11 @@ const Residentprofile = (props) => {
             {editForm && <EditResidentForm
                     show={editForm}
                     resId={props.resId}
+                    firstName={props.firstName}
+                    surName={props.surName}
+                    age={props.age}
+                    guardianName={props.guardName}
+                    bio={props.bio}
                     handleClose={() => setEditForm(false)} 
                     handleSubmission={() => props.handleSubmission()}
                 />}

@@ -43,7 +43,8 @@ class ResidentsList extends React.Component {
         let residentPreviews = residents.map((resident,idx) =>
         <ResidentPreview handleSubmission={() => this.handleSubmission()} 
                                                 archived={resident.archived} 
-                                                title={resident.firstName} 
+                                                firstName={resident.firstName} 
+                                                surName={resident.surName}
                                                 resId={resident.residentId}
                                                 bio={resident.bio}
                                                 age={resident.age} 
