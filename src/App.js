@@ -11,11 +11,13 @@ import EmailConfirmation from "./email/EmailConfirmation";
 import EmailInquiry from "./email/EmailInquiry";
 //import MedicationDetailsPage from "./medication/MedicationDetailsPage";
 import ListDetailsComponent from "./ListDetailsCompoenet";
+import Dashboard from "./Dashboard/Dashboard";
 
 function App() {
   return (
     <div>
-      <ListDetailsComponent />
+      <Dashboard />
+      {/*<ListDetailsComponent />*/}
       <Router>
         <Route path="/MedicationDetailsPage" component={ListDetailsComponent} />
         <Route exact path="/" component={EmailPage} />
