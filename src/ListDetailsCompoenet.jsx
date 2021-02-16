@@ -11,11 +11,13 @@ class ListDetailsComponent extends Component {
 
   componentDidMount() {
     MedicationDetailsService.getDetails().then((res) => {
+      console.log(res);
       this.setState({ medication: res.data });
     });
   }
 
   render() {
+    const { medication } = this.state;
     return (
       <div>
         <h2 className="text-center">Medication Detail</h2>
@@ -26,7 +28,7 @@ class ListDetailsComponent extends Component {
               <tr>
                 <th>Description</th>
                 <th>Dosage</th>
-                <th>Medication Class</th>
+                {/*<th>Medication Class</th>*/}
                 <th>Medication Name</th>
                 <th>Pharmacy Name</th>
                 <th>Count</th>
@@ -34,16 +36,13 @@ class ListDetailsComponent extends Component {
             </tbody>
 
             <tbody>
-              {this.state.medication.map((medication) => (
-                <tr key={medication.id}>
-                  <td>{medication.medicationDescription}</td>
-                  <td>{medication.dosage}</td>
-                  <td>{medication.medicationClass}</td>
-                  <td>{medication.medicationName}</td>
-                  <td>{medication.pharmacyName}</td>
-                  <td>{medication.prescriptionCount}</td>
-                </tr>
-              ))}
+              <tr>
+                <td>{medication.description}</td>
+                <td>{medication.dosage}</td>
+                <td>{medication.medicationName}</td>
+                <td>{medication.pharmacyName}</td>
+                <td>{medication.medicationCount}</td>
+              </tr>
             </tbody>
           </table>
         </div>
