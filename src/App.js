@@ -20,10 +20,10 @@ class App extends Component {
 
           </nav>
           <Switch>
-              <Route path='/viewAudit' component={ViewAudit} />
+
               <Route path='/addMedication' component={AddMedication} />
               <Route path='/audit' component={AddAudit} />
-              <Route path='/viewAudit' component={View} />
+              <Route path='/view' component={View} />
           </Switch>
         </div>
       </Router>

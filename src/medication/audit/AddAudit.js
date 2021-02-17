@@ -73,10 +73,9 @@ class AddAudit extends React.Component {
     this.setState(changeObject)
   }
 
-  handleReset = () =>{
-    document.querySelectorAll('input');
+  Reset = () =>{
     this.setState({
-      audits:[{}]
+      audits:{}
     });
   };
 
@@ -148,7 +147,7 @@ class AddAudit extends React.Component {
                     />
                 </label>
                 <input type="submit" value="Submit Audit" onClick={(e) => this.create(e)}/>
-                <input type="reset" value="Reset Audit" />
+        
               </form>
             </div>
           </div>

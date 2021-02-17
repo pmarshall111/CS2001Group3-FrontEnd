@@ -74,7 +74,8 @@ class AddMedication extends React.Component {
 
     render() {
         return (
-          
+          <div className="container">
+          <h1 className="display-4 text-center">Add Medication</h1>
             <Form>
 
                 <Form.Label>Medication Name</Form.Label>
@@ -117,7 +118,7 @@ class AddMedication extends React.Component {
                 Add new medication
             </Button>
         </Form>
-
+        </div>
         );
     }
 }
