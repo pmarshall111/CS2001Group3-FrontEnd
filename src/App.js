@@ -14,6 +14,7 @@ import EmailReadyForCollection from "./email/EmailReadyForCollection";
 import MedicationForm from "./medication/MedicationForm";
 import Timeline from "./shared/Timeline";
 import ParentTooltip from "./shared/tooltip/ParentTooltip";
+import Medication_TEMP from "./medication/Medication_TEMP";
 
 class App extends React.Component {
     constructor(props) {
@@ -27,12 +28,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${backendUrl}/pharmacy?careHomeId=${this.state.careHome.id}`)
-            .then(response => response.text())
-            .then(response => {
-                console.log({pharmacies: JSON.parse(response)})
-                this.setState({pharmacies: JSON.parse(response)})
-        })
+        this.getPharmacies(this.state.careHome.id)
 
         // fetch(`${backendUrl}/medication/schedule/?residentId=1`)
         //     .then(r => r.json())
@@ -44,16 +40,25 @@ class App extends React.Component {
         //         this.setState({medicationDoses: dosages})
         //     })
 
-        // fetch(`${backendUrl}/medication/schedule/all/?careHomeId=0`)
-        //     .then(r => r.json())
-        //     .then(r => {
-        //         console.log(r)
-        //         const dosages = r.map(x => {
-        //             return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
-        //         })
-        //         this.setState({medicationDoses: dosages})
-        //     })
+        fetch(`${backendUrl}/medication/schedule/all/?careHomeId=0`)
+            .then(r => r.json())
+            .then(r => {
+                console.log(r)
+                const dosages = r.map(x => {
+                    return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
+                })
+                this.setState({medicationDoses: dosages})
+            })
 
+    }
+
+    getPharmacies(careHomeId) {
+        fetch(`${backendUrl}/pharmacy?careHomeId=${careHomeId}`)
+            .then(response => response.text())
+            .then(response => {
+                console.log({pharmacies: JSON.parse(response)})
+                this.setState({pharmacies: JSON.parse(response)})
+            })
     }
 
     render() {
@@ -85,14 +90,15 @@ class App extends React.Component {
 
         return (
             <Router>
-                <Route exact path="/" component={EmailPage} />
+                <Route exact path="/" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
 
                 <Route exact path="/email" component={EmailPage} />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
                 <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
                 <Route path="/pharmacy" render={(props) =>
-                    <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id} />
+                    <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id}
+                                  pharmaciesHaveChanged={() => this.getPharmacies(this.state.careHome.id)} />
                 } />
                 <Route path="/alerts" render={(props) =>
                     <AlertsPage {...props}

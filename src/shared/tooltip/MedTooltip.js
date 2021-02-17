@@ -5,20 +5,23 @@ import {ListGroup} from "react-bootstrap";
 const MedTooltip = (props) => {
     const {medications} = props;
 console.log(medications)
-    const items = medications.map(med => {
-        const {dose, medicationName} = med;
-        return (
-            <ListGroup.Item>
-                <div>
-                    <h3>{dose} {medicationName}</h3>
-                </div>
-            </ListGroup.Item>
-        )
-    })
+    let items;
+    if (medications) {
+        items = medications.map(med => {
+            const {dose, medicationName} = med;
+            return (
+                <ListGroup.Item>
+                    <div>
+                        <h3>{dose} {medicationName}</h3>
+                    </div>
+                </ListGroup.Item>
+            )
+        })
+    }
 
     return (
         <ListGroup>
-            {items}
+            {items || ""}
         </ListGroup>
     );
 }

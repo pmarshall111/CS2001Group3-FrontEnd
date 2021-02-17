@@ -15,7 +15,7 @@ class PharmacyPage extends React.Component {
     }
 
     render() {
-        let {pharmacies, careHomeId} = this.props;
+        let {pharmacies, careHomeId, pharmaciesHaveChanged} = this.props;
         let {showForm} = this.state;
         let pharmacyPreviews = pharmacies.map((pharmacy,idx) =>
             <PharmacyPreview title={pharmacy.name} isDefault={pharmacy.default}
@@ -33,7 +33,10 @@ class PharmacyPage extends React.Component {
                 {showForm && <AddPharmacyForm
                     show={showForm}
                     handleClose={() => this.setState({showForm: false})}
-                    handleSubmission={() => this.setState({showForm: false})}
+                    handleSubmission={() => {
+                        pharmaciesHaveChanged();
+                        this.setState({showForm: false})
+                    }}
                     careHomeId={this.props.careHomeId}
                 />}
             </main>
