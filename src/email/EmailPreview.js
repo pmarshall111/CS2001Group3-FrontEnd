@@ -8,7 +8,7 @@ import {backendUrl} from "../config";
 import {dateIsYesterdayOrEarlier} from "../helper/dateHelper";
 
 const EmailPreview = (props) => {
-    const {resident, status, medication, pharmacy, dateLastEmailSent, dateResponded, dateMedicationToBeReady, inquiryComment,nonGuessableId} = props;
+    const {resident, status, medication, pharmacy, dateLastEmailSent, dateResponded, dateMedicationToBeReady, inquiryComment, nonGuessableId} = props;
 
     let backgroundColour;
     if (status === READY ) {
