@@ -14,8 +14,11 @@ import EmailReadyForCollection from "./email/EmailReadyForCollection";
 import MedicationForm from "./medication/MedicationForm";
 import Timeline from "./shared/Timeline";
 import ParentTooltip from "./shared/tooltip/ParentTooltip";
+
 import Medication_TEMP from "./medication/Medication_TEMP";
 import FileUpload from "./shared/FileUpload";
+
+import ResidentsList from './profile/ResidentsList';
 
 class App extends React.Component {
     constructor(props) {
@@ -94,6 +97,7 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
                 <Route exact path="/file-upload" render={(props) => <FileUpload isResident={true} id={1} />} />
                 <Route exact path="/email" component={EmailPage} />
+                <Route path="/profile" render={ ()=> <ResidentsList/> } />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
                 <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
