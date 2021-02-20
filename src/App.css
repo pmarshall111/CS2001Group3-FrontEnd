@@ -1,4 +1,5 @@
 main {
+  margin: 0;
   width: 100%;
   box-sizing: border-box;
   padding: 20px;
@@ -14,4 +15,14 @@ main {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+.text-center {
+  margin-top: 30px;
+}
+.row {
+  margin-top: 30px;
+  table-layout: fixed;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
 }
