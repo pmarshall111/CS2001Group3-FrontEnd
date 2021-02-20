@@ -1,17 +1,34 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleBar from "../shared/TitleBar";
 import Button from "react-bootstrap/Button";
 import "./Residentprofile.css";
 import EditResidentForm from "./EditResidentForm";
-import { backendUrl } from "../config";
+import {backendUrl, imagesUrl} from "../config";
+import FileUploadBtn from "../shared/FileUploadBtn";
 
 
 
 const Residentprofile = (props) => {
+    const {resId, firstName} = props;
+
     const [editForm, setEditForm] = useState(false);
+    const [residentImage, setResidentImage] = useState("");
+
     let archived = props.archived;
     let residentId = props.resId;
 
+    useEffect(() => {
+        getResImg();
+    }, []) //empty array to signify this func should only run once
+
+    const getResImg = () => {
+        fetch(`${imagesUrl}/resident/${resId}`)
+            .then(r => {
+                console.log("changing image")
+                setResidentImage("");
+                setTimeout(() => setResidentImage(`${imagesUrl}/resident/${resId}`), 100);
+            })
+    }
 
     function submit(e) {
         e.preventDefault();
@@ -21,6 +38,15 @@ const Residentprofile = (props) => {
         fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
         window.location.reload(false);
     }
+
+    let residentImageSection;
+    if (residentImage !== "") {
+        residentImageSection = <div className={"profile-pic"} style={{"background-image": `url(${imagesUrl}/resident/${resId})`}} alt="Resident profile image" />
+    } else {
+        residentImageSection = <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} />
+    }
+
+    //oldImgSrc="https://i.imgur.com/MI2Pf2H.jpg"
     return (
         <main>
             <TitleBar title={"Resident Profile"}>
@@ -30,7 +56,12 @@ const Residentprofile = (props) => {
             <div className="container-fluid">
                 <div className="row align-items-start">
                     <div className="col-md-3 .offset-md-2">
-                        <img src="https://i.imgur.com/MI2Pf2H.jpg" width="400" height="400" className="img-thumbnail" alt="..."></img>
+                        <div className={"profile-img-container"}>
+                            <div className={"profile-pic-container"}>
+                                {residentImageSection}
+                            </div>
+                            {imagesUrl ? <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} edit={true} /> : ""}
+                        </div>
                         <h1>{props.firstName}</h1>
                         <h3>Age: {props.age}</h3>
                         <h3>Guardian: {props.guardName}</h3>

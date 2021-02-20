@@ -23,11 +23,13 @@ class ResidentsList extends React.Component {
             method: 'GET'
         }
         
-        fetch(`${backendUrl}/resident/all?careHomeId=7`, options)
-            .then(response => response.text())
+        fetch(`${backendUrl}/resident/all?careHomeId=0`, options)
+            .then(response => response.json())
             .then(response => {
-                console.log(JSON.parse(response))
-                this.setState({residents: JSON.parse(response)})
+                console.log(response)
+                if (!response.status || response.status === 200) {
+                    this.setState({residents: response})
+                }
             })
     }
 

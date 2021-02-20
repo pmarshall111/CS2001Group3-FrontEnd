@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 import PharmacyPage from "./pharmacy/PharmacyPage";
 import EmailPage from "./email/EmailPage";
 import EmailSetDate from "./email/EmailSetDate";
@@ -16,9 +17,10 @@ import Timeline from "./shared/Timeline";
 import ParentTooltip from "./shared/tooltip/ParentTooltip";
 
 import Medication_TEMP from "./medication/Medication_TEMP";
-import FileUpload from "./shared/FileUpload";
+import FileUploadBtn from "./shared/FileUploadBtn";
 
 import ResidentsList from './profile/ResidentsList';
+import Dashboard from "./Dashboard/Dashboard";
 
 class App extends React.Component {
     constructor(props) {
@@ -94,10 +96,11 @@ class App extends React.Component {
 
         return (
             <Router>
-                <Route exact path="/" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
-                <Route exact path="/file-upload" render={(props) => <FileUpload isResident={true} id={1} />} />
+                <Route exact path="/" render={(props) => <Dashboard />} />
+                <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
                 <Route exact path="/email" component={EmailPage} />
                 <Route path="/profile" render={ ()=> <ResidentsList/> } />
+                <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />
                 <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />

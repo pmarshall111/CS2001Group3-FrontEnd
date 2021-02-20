@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import Button from "react-bootstrap/Button";
 import FileUploadForm from "./FileUploadForm";
 
-const FileUpload = (props) => {
-    const {isResident, id} = props;
+const FileUploadBtn = (props) => {
+    const {isResident, id, name, onAddFile, edit} = props;
     const [showForm, setShowForm] = useState(false);
+
+    const btnText = edit ? "Change image!" : "Upload image!"
 
     return (
         <div>
-            <Button variant="primary" onClick={() => setShowForm(true)}>Upload file</Button>
+            <Button variant="outline-secondary" onClick={() => setShowForm(true)}>{btnText}</Button>
             {showForm && <FileUploadForm
                 show={showForm}
                 handleClose={() => setShowForm(false)}
@@ -17,9 +19,11 @@ const FileUpload = (props) => {
                 }}
                 id={id}
                 isResident={isResident}
+                name={name}
+                onAddFile={onAddFile}
             />}
         </div>
     );
 }
 
-export default FileUpload;
+export default FileUploadBtn;
