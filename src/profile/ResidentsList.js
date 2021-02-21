@@ -6,6 +6,7 @@ import { backendUrl } from "../config";
 //import "./PharmacyPage.css";
 import AddResidentForm from "./AddResidentForm";
 import ResidentPreview from './ResidentPreview';
+import Residentprofile from "./Residentprofile";
 // import Residentprofile from './Residentprofile';
 
 class ResidentsList extends React.Component {
@@ -19,11 +20,7 @@ class ResidentsList extends React.Component {
     }
 
     getDataFromDb() {
-        const options = {
-            method: 'GET'
-        }
-        
-        fetch(`${backendUrl}/resident/all?careHomeId=0`, options)
+        fetch(`${backendUrl}/resident/all?careHomeId=0`)
             .then(response => response.json())
             .then(response => {
                 console.log(response)
@@ -41,9 +38,34 @@ class ResidentsList extends React.Component {
     }
 
     render() {
-        let {residents, showForm} = this.state;
+        let id = window.location.pathname.split("/")[2];
+        console.log(id)
+
+        const {residents, showForm} = this.state;
+
+        console.log(this.state.residents, this.state.residents.length)
+
+        if (id) {
+            //need to go through all residents and find the one with this ID
+            const resident = this.state.residents.filter(x => x.residentId == id)[0]
+            if (resident) {
+                const {residentId, bio, age, guardName, firstName, surName, archived} = resident;
+                return (
+                    <Residentprofile
+                        resId={residentId}
+                        bio={bio}
+                        age={age}
+                        guardName={guardName}
+                        firstName={firstName}
+                        surName={surName}
+                        archived={archived}/>
+                )
+            }
+        }
+
+        //we don't add else here. designed so that if the ID isn't a resident, we still display the list.
         let residentPreviews = residents.map((resident,idx) =>
-        <ResidentPreview handleSubmission={() => this.handleSubmission()} 
+            <ResidentPreview handleSubmission={() => this.handleSubmission()}
                                                 archived={resident.archived} 
                                                 firstName={resident.firstName} 
                                                 surName={resident.surName}

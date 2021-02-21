@@ -29,3 +29,7 @@ h3{
     place-items: center;
     grid-gap: 10px;
 }
+
+.resident-bio {
+    min-height: 200px;
+}

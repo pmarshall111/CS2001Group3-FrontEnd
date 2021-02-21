@@ -21,6 +21,7 @@ import FileUploadBtn from "./shared/FileUploadBtn";
 
 import ResidentsList from './profile/ResidentsList';
 import Dashboard from "./Dashboard/Dashboard";
+import Residentprofile from "./profile/Residentprofile";
 
 class App extends React.Component {
     constructor(props) {
@@ -99,7 +100,7 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <Dashboard />} />
                 <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
                 <Route exact path="/email" component={EmailPage} />
-                <Route path="/profile" render={ ()=> <ResidentsList/> } />
+                <Route path="/resident" render={ ()=> <ResidentsList/> } />
                 <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />

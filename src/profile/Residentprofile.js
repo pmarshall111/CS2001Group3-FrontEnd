@@ -5,6 +5,7 @@ import "./Residentprofile.css";
 import EditResidentForm from "./EditResidentForm";
 import {backendUrl, imagesUrl} from "../config";
 import FileUploadBtn from "../shared/FileUploadBtn";
+import Timeline from "../shared/Timeline";
 
 
 
@@ -13,12 +14,14 @@ const Residentprofile = (props) => {
 
     const [editForm, setEditForm] = useState(false);
     const [residentImage, setResidentImage] = useState("");
+    const [medicationDoses, setMedicationDoses] = useState([]);
 
     let archived = props.archived;
     let residentId = props.resId;
 
     useEffect(() => {
         getResImg();
+        getResDosages();
     }, []) //empty array to signify this func should only run once
 
     const getResImg = () => {
@@ -27,6 +30,18 @@ const Residentprofile = (props) => {
                 console.log("changing image")
                 setResidentImage("");
                 setTimeout(() => setResidentImage(`${imagesUrl}/resident/${resId}`), 100);
+            })
+    }
+
+    const getResDosages = () => {
+        fetch(`${backendUrl}/medication/schedule/?residentId=${resId}`)
+            .then(r => r.json())
+            .then(r => {
+                console.log(r)
+                const dosages = r.map(x => {
+                    return {...x, time: new Date(x.time), resident: x.residentName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
+                })
+                setMedicationDoses(dosages);
             })
     }
 
@@ -41,7 +56,7 @@ const Residentprofile = (props) => {
 
     let residentImageSection;
     if (residentImage !== "") {
-        residentImageSection = <div className={"profile-pic"} style={{"background-image": `url(${imagesUrl}/resident/${resId})`}} alt="Resident profile image" />
+        residentImageSection = <div className={"profile-pic"} style={{"backgroundImage": `url(${imagesUrl}/resident/${resId})`}} alt="Resident profile image" />
     } else {
         residentImageSection = <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} />
     }
@@ -60,18 +75,24 @@ const Residentprofile = (props) => {
                             <div className={"profile-pic-container"}>
                                 {residentImageSection}
                             </div>
-                            {imagesUrl ? <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} edit={true} /> : ""}
+                            {residentImage !== "" ? <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} edit={true} /> : ""}
                         </div>
-                        <h1>{props.firstName}</h1>
+                        <h1>{props.firstName} {props.archived ? "[ARCHIVED]" : ""}</h1>
                         <h3>Age: {props.age}</h3>
                         <h3>Guardian: {props.guardName}</h3>
                         <h3>Contact Number: 02089991273</h3> 
-                        <h3>E-mail:example@hotmail.co.uk</h3>  
+                        <h3>E-mail:example@hotmail.co.uk</h3>
+                        <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
                     </div>
                     <div className="col-md-6">
-                        <h1>Bio</h1>
-                        <p>{props.bio}</p> 
-                
+                        <div className={"resident-bio"}>
+                            <h1>Bio</h1>
+                            <p>{props.bio}</p>
+                        </div>
+                        <div>
+                            <h1>Medication Schedule</h1>
+                            <Timeline dosages={medicationDoses} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,7 +107,6 @@ const Residentprofile = (props) => {
                     handleClose={() => setEditForm(false)} 
                     handleSubmission={() => props.handleSubmission()}
                 />}
-            <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
         </main>
     );
 }

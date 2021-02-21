@@ -112,7 +112,6 @@ const Timeline = (props) => {
     return (
         <div>
             <svg ref={ref}/>
-            <div>{isHovered ? 1 : 0}</div>
             <ParentTooltip medicationsAtTime={medsForTime} isHovered={isHovered}
                            keepHovered={() => {
                                 clearAllTimeouts();
