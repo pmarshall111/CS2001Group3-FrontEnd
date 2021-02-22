@@ -1,7 +1,12 @@
 
-div {
-  padding-top: 30px;
-  padding-right: 30px;
-  padding-bottom: 300px;
-  padding-left: 20px;
+div.container {
+  padding-top: 20px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  padding-left: 2px;
+}
+
+
+div.DatePicker{
+  color: #cef2f0;
 }

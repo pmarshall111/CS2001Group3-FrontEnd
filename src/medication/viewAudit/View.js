@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
+import DatePicker from "react-datepicker";
+import './ViewAudit.css' ;
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class View extends Component{
   constructor(props){
@@ -9,6 +13,13 @@ class View extends Component{
     this.state ={
       audits: [],
     };
+
+    const PickDay = () => {
+      const [startDate, setStartDate] = useState(new Date());
+      return (
+        <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+  );
+};
   }
 
     componentDidMount() {
@@ -46,13 +57,20 @@ class View extends Component{
       })
     }
 
+
   render(){
     return(
-      <div className="container">
-        <div className="row justify-content-center">
+      <div className="container" id ="main">
+        <div className="row justify-content-center" id ="main2">
 
             <h1 className="display-4 text-center">View Historic Audit</h1>
             <input placeholder="Selected date" type="date" id="date-picker-example" class="form-control datepicker"></input>
+
+            <DatePicker type="date" id="date-pick" 
+            selected={this.date}
+            onSelect={this.handleDateSelect} //when day is clicked
+            onChange={this.handleDateChange} //only when value has changed
+            ></DatePicker>
 
             <Table
             data-toggle = "table"
@@ -72,8 +90,6 @@ class View extends Component{
                     <th data-field="name"> Staff Name </th>
                 </tr>
               </thead>
-
-              
 
             </Table>
 
