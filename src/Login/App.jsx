@@ -4,7 +4,7 @@ import LoginComponent from "./LoginComponent";
 import LogoutComponent from "./LogoutComponent";
 import WelcomeComponent from "./WelcomeComponent";
 import ErrorComponent from "./ErrorComponent";
-import ListTodosComponent from "./ListToComponent";
+// import ListTodosComponent from "./ListToComponent";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import AuthenticatedRoute from "./AuthenticatedRoute.jsx";
@@ -24,10 +24,10 @@ class App extends Component {
                 path="/welcome/:name"
                 component={WelcomeComponent}
               />
-              <AuthenticatedRoute
+              {/* <AuthenticatedRoute
                 path="/todos"
                 component={ListTodosComponent}
-              />
+              /> */}
 
               <AuthenticatedRoute path="/emailpage" component={EmailPage} />
 
