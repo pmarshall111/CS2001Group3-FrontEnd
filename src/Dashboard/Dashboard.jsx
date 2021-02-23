@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router";
+import EmailPage from "../email/EmailPage";
 
 function Dashboard() {
   return (
@@ -49,6 +51,7 @@ function Dashboard() {
                 <Card.Text>
                   Click to view more information about Emails
                 </Card.Text>
+
                 <Button variant="primary">View Emails</Button>
               </Card.Body>
             </Card>

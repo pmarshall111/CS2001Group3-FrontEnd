@@ -12,19 +12,21 @@ import EmailInquiry from "./email/EmailInquiry";
 //import MedicationDetailsPage from "./medication/MedicationDetailsPage";
 import ListDetailsComponent from "./ListDetailsCompoenet";
 import Dashboard from "./Dashboard/Dashboard";
+import Login from "./Login/App";
 
 function App() {
   return (
     <div>
-      <Dashboard />
+      <Login />
+      {/*<Dashboard />*/}
       {/*<ListDetailsComponent />*/}
-      <Router>
+      {/* <Router>
         <Route path="/MedicationDetailsPage" component={ListDetailsComponent} />
         <Route exact path="/" component={EmailPage} />
         <Route path="/email/confirmation" component={EmailConfirmation} />
         <Route path="/email/inquiry" component={EmailInquiry} />
         <Route path="/pharmacy" component={PharmacyPage} />
-      </Router>
+      </Router> */}
     </div>
   );
 }
