@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {FormControl, FormLabel, Tab, Tabs} from "react-bootstrap";
+import {FormControl, FormLabel, Modal, Tab, Tabs} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import MedicationDose from "./MedicationDose";
 import Button from "react-bootstrap/Button";
 import {backendUrl} from "../config";
 
-const MedicationForm = (props) => {
-    const {resId, pharmacies} = props;
+import "./MedicationForm.css"
 
-    let [doseTimes, setDoseTimes] = useState([{time: new Date(), repeats:"Every day", dose: "25mg"}])
+const MedicationForm = (props) => {
+    const {resId, resName, pharmacies, show, handleClose, handleSubmission} = props;
+
+    let [doseTimes, setDoseTimes] = useState([])
     const [medName, setMedName] = useState("");
     const [medDesc, setMedDesc] = useState("");
     const [selectedMedIdx, setSelectedMedIdx] = useState(0);
@@ -25,17 +27,20 @@ const MedicationForm = (props) => {
     const submit = () => {
         let objToSend;
         if (activeKey === "add-new") {
-            objToSend = {medName, medDesc, medDoses: doseTimes, resId, pharmacyId: pharmacies[selectedPharmacyIdx].id};
+            objToSend = {medName, medDesc, medDoses: doseTimes, resId, pharmacyId: pharmacies[selectedPharmacyIdx].pharmacyId};
         } else {
             const {name, description, medicationId} = currentMedications[selectedMedIdx];
-            objToSend = {medName: name, medDesc: description, medId: medicationId, medDoses: doseTimes, resId, pharmacyId: pharmacies[selectedPharmacyIdx].id};
+            objToSend = {medName: name, medDesc: description, medId: medicationId, medDoses: doseTimes, resId, pharmacyId: pharmacies[selectedPharmacyIdx].pharmacyId};
         }
         //send off data
         console.log(objToSend)
         fetch(`${backendUrl}/medication`,
             {method: "POST", body: JSON.stringify(objToSend), headers: {"Content-Type": "application/json"}})
             .then(r => r.json())
-            .then(r => console.log(r));
+            .then(r => {
+                console.log(r);
+                handleSubmission();
+            });
     }
 
     useEffect( () => {
@@ -47,14 +52,13 @@ const MedicationForm = (props) => {
             })
     }, []);
 
-    const getPharmaciesForCareHome = () => {
-
-    }
-
     return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header><Modal.Title>New Medication for {resName}</Modal.Title></Modal.Header>
+            <Modal.Body>
             <Form>
-                <div className={"medications-container"}>
-                    <FormLabel>Medication</FormLabel>
+                <div className={"medications-container med-form-cont"}>
+                    <h5>Medication</h5>
                     <Tabs activeKey={activeKey} onSelect={e => {
                         console.log(e);
                         setActiveKey(e)
@@ -75,23 +79,29 @@ const MedicationForm = (props) => {
                         </Tab>
                     </Tabs>
                 </div>
-                <div className={"pharmacy-container"}>
-                    <FormLabel>Pharmacy:</FormLabel>
+                <div className={"pharmacy-container med-form-cont"}>
+                    <h5>Pharmacy to email:</h5>
                     <Form.Control as="select" value={selectedPharmacyIdx} onChange={e => setSelectedPharmacyIdx(e.target.value)}>
                         {pharmacies.map((x,idx) => <option value={idx}>{x.name}</option>)}
                     </Form.Control>
                 </div>
-                <div className={"medications-dose-container"}>
-                    <FormLabel>Dose Times</FormLabel>
+                <div className={"medications-dose-container med-form-cont"}>
+                    <h5>Dose Times</h5>
                     {doseForms}
                     <Button variant={"light"} onClick={e => {
                         e.preventDefault();
                         setDoseTimes(doseTimes.concat({time: new Date(), dose: "25mg", repeats: "Every day"}))
-                    }}>Add +</Button>
+                    }}>Add new +</Button>
                 </div>
-                <Button variant={"success"} onClick={submit}>Submit!</Button>
             </Form>
-    );
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant={"secondary"} onClick={handleClose}>Close</Button>
+                <Button variant={"success"} onClick={submit}>Submit!</Button>
+            </Modal.Footer>
+        </Modal>
+
+);
 }
 
 export default MedicationForm;

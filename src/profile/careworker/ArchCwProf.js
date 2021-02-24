@@ -1,27 +1,27 @@
 import React from 'react';
 import TitleBar from "../shared/TitleBar";
 import Button from "react-bootstrap/Button";
-import "./Residentprofile.css";
-import { backendUrl } from "../config";
+import "./CareWorkerProfile.css";
+import { backendUrl } from "../../config";
 
 
 
-const ArchResProf = (props) => {
+const ArchCwProf = (props) => {
     let archived = props.archived;
-    let residentId = props.resId;
+    let careWorkerId = props.resId;
 
 
     function submit(e) {
         e.preventDefault();
         (archived ? archived=false : archived=true);
-        const data = { residentId, archived };
+        const data = { careWorkerId, archived };
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
+        fetch(`${backendUrl}/careWorker`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
         window.location.reload(false);
     }
     return (
         <main>
-            <TitleBar title={"[ARCHIVED RESIDENT]"}>
+            <TitleBar title={"[ARCHIVED CareHome Worker]"}>
                 <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
             </TitleBar>
             <div className="container-fluid">
@@ -38,4 +38,4 @@ const ArchResProf = (props) => {
     );
 }
 
-export default ArchResProf;
+export default ArchCwProf;

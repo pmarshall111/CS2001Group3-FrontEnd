@@ -15,7 +15,7 @@ const MedicationDose = (props) => {
     return (
         <div className={"dose-container"} key={idx}>
             <div className={"close-btn-container"}>
-                <button variant={"light"} onClick={e => {e.preventDefault(); setDoseTimes(doseTimes.slice(0,idx).concat(doseTimes.slice(idx+1)))}}>X</button>
+                <Button variant={"light"} onClick={e => {e.preventDefault(); setDoseTimes(doseTimes.slice(0,idx).concat(doseTimes.slice(idx+1)))}}>X</Button>
             </div>
             <FormLabel>Time: </FormLabel>
             <DateTimePicker

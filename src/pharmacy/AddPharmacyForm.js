@@ -18,8 +18,8 @@ const AddPharmacyForm = (props) => {
         e.preventDefault();
         const data = {name: pharmacyName, email, phoneNumb, address, careHomeId: props.careHomeId}
         console.log(data);
-        fetch(`${backendUrl}/pharmacy`, {method: "POST", body: JSON.stringify(data), headers: {"Content-Type": "application/json"}});
-        props.handleSubmission();
+        fetch(`${backendUrl}/pharmacy`, {method: "POST", body: JSON.stringify(data), headers: {"Content-Type": "application/json"}})
+            .then(r => props.handleSubmission());
     }
 
     return (
@@ -50,11 +50,14 @@ const AddPharmacyForm = (props) => {
                                       onChange={e => setAddress(e.target.value)} value={address}
                         />
                     </Form.Group>
-                    <Button variant="primary" onClick={e => submit(e)}>
-                        Add new pharmacy
-                    </Button>
                 </Form>
             </Modal.Body>
+            <Modal.Footer>
+                <Button variant={"secondary"} onClick={props.handleClose}>Close</Button>
+                <Button variant="primary" onClick={e => submit(e)}>
+                    Add new pharmacy
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 }

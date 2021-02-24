@@ -10,15 +10,14 @@ const Timeline = (props) => {
     const {dosages} = props;
     const width = 1000;
     const height = 200;
-    const roundToNearestMins = 60;
-    const msBeforePopoverVanish = 250;
+    const roundToNearestMins = 30;
+    const msBeforePopoverVanish = 25;
 
     console.log(dosages)
 
     let time = new Date().getTime(); //not using state here as D3 won't view updated state...?
     const [medsForTime, setMedsForTime] = useState([]);
     const [isHovered, setIsHovered] = useState(false);
-    const [timeoutIds, setTimeoutIds] = useState([]);
     const [lastTimeoutId, setLastTimeoutId] = useState(0);
     const [targetX, setTargetX] = useState(-200);
     const [targetY, setTargetY] = useState(-200);
@@ -87,10 +86,12 @@ const Timeline = (props) => {
                 clearAllTimeouts();
                 if (roundedTime.getTime() !== time) {
                     time = roundedTime.getTime()
+                    console.log(medsForTime);
                     setMedsForTime(dosages.filter(dose => dose.roundedTime.getTime() === roundedTime.getTime()));
                     setIsHovered(true);
                 }
             })
+            .on("mouseover", () => clearAllTimeouts())
             .on("mouseout", () => {
                 clearAllTimeouts();
                 setLastTimeoutId(setTimeout(() => setIsHovered(false), msBeforePopoverVanish));
@@ -100,10 +101,10 @@ const Timeline = (props) => {
 
     const clearAllTimeouts = () => {
         //ensuring all timeouts are deleted. as react is asynchronous trying to capture Ids in an array was causing bugs.
-        for (let i = 0; i<10 ; i++) {
+        for (let i = 0; i<500 ; i++) {
             clearTimeout(lastTimeoutId-i);
         }
-        for (let i = 0; i<50 ; i++) {
+        for (let i = 0; i<500 ; i++) {
             clearTimeout(lastTimeoutId+i);
         }
     }
@@ -111,7 +112,6 @@ const Timeline = (props) => {
     return (
         <div>
             <svg ref={ref}/>
-            <div>{isHovered ? 1 : 0}</div>
             <ParentTooltip medicationsAtTime={medsForTime} isHovered={isHovered}
                            keepHovered={() => {
                                 clearAllTimeouts();
@@ -123,6 +123,7 @@ const Timeline = (props) => {
                            }}
                            xPos={targetX}
                            yPos={targetY}
+                           msBeforePopoverVanish={msBeforePopoverVanish}
             />
         </div>
     );

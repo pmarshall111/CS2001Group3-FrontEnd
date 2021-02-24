@@ -5,7 +5,7 @@ import ResidentTooltip from "./ResidentTooltip";
 import "./ParentTooltip.css";
 
 const ParentTooltip = (props) => {
-    const {medicationsAtTime, isHovered, keepHovered, startHideTimer, xPos, yPos} = props;
+    const {medicationsAtTime, isHovered, keepHovered, startHideTimer, xPos, yPos, msBeforePopoverVanish} = props;
 
     //need to get a list of the residents.
     let residentMeds = {};
@@ -24,7 +24,7 @@ const ParentTooltip = (props) => {
     const numbResidents = Object.keys(residentMeds).length;
     let content;
     if (numbResidents !== 0) {
-        content = <ResidentTooltip residentDict={residentMeds} />
+        content = <ResidentTooltip residentDict={residentMeds} msBeforePopoverVanish={msBeforePopoverVanish} />
     }
 
     return (
