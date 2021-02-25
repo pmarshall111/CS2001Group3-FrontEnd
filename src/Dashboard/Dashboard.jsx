@@ -2,8 +2,23 @@ import React, { Component } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router";
 import EmailPage from "../email/EmailPage";
+import { useHistory } from "react-router-dom";
 
-function Dashboard() {
+const Dashboard = () => {
+  const history = useHistory();
+
+  const handleResident = () => {
+    history.push("/resident");
+  };
+
+  const handleEmail = () => {
+    history.push("/email");
+  };
+
+  const handlePharmacy = () => {
+    history.push("/pharmacy");
+  };
+
   return (
     <div>
       <Container fluid="md">
@@ -20,7 +35,9 @@ function Dashboard() {
                 <Card.Text>
                   Click to view more information about Residents
                 </Card.Text>
-                <Button variant="primary">View Residents</Button>
+                <Button variant="primary" onClick={handleResident}>
+                  View Residents
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -52,7 +69,9 @@ function Dashboard() {
                   Click to view more information about Emails
                 </Card.Text>
 
-                <Button variant="primary">View Emails</Button>
+                <Button variant="primary" onClick={handleEmail}>
+                  View Emails
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -97,7 +116,9 @@ function Dashboard() {
                 <Card.Text>
                   Click to view more information about Pharmacies
                 </Card.Text>
-                <Button variant="primary">View Pharmacies</Button>
+                <Button variant="primary" onClick={handlePharmacy}>
+                  View Pharmacies
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -105,6 +126,6 @@ function Dashboard() {
       </Container>
     </div>
   );
-}
+};
 
 export default Dashboard;

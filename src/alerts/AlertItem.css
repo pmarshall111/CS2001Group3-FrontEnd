@@ -1,0 +1,25 @@
+.alert-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    box-sizing: border-box;
+    padding: 40px 20px;
+    border: 2px solid black;
+    color: black;
+}
+
+.alert-time {
+    display: grid;
+    justify-items: end;
+    align-items: center;
+}
+
+.alert-details {
+    display: grid;
+    grid-template-columns: 100%;
+    place-items: center;
+}
+
+.alert-btn-container {
+    display: grid;
+    place-items: center;
+}

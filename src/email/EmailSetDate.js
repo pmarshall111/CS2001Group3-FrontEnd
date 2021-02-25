@@ -5,7 +5,7 @@ import List from "../shared/List";
 import {backendUrl} from "../config";
 import {convertToYYYYMMDD} from "../helper/convertTimestampToDate";
 
-const EmailConfirmation = (props) => {
+const EmailSetDate = (props) => {
     const [readyDate, setReadyDate] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [careHomeName, setCareHomeName] = useState("-");
@@ -32,7 +32,11 @@ const EmailConfirmation = (props) => {
     const submit = e => {
         e.preventDefault();
         console.log({readyDate, requestId});
-        fetch(`${backendUrl}/email/accept`, {method: "POST", body: JSON.stringify({readyDate,requestId}), headers: {"Content-Type": "application/json"}})
+        fetch(`${backendUrl}/email/accept`, {
+            method: "POST",
+            body: JSON.stringify({readyDate, requestId}),
+            headers: {"Content-Type": "application/json"}
+        })
             .then(response => response.json())
             .then(r => {
                 console.log(r);
@@ -43,7 +47,7 @@ const EmailConfirmation = (props) => {
 
     //getting todays date so we can set the earliest date the medication is ready to today - i.e. the pharmacist cannot pick a past date
     let now = new Date();
-    let today =  now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate();
+    let today = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
 
     let inquiryDetails = {
         "Care Home": careHomeName, Resident: residentName, Medication: medication
@@ -51,11 +55,11 @@ const EmailConfirmation = (props) => {
 
     if (!isSubmitted) {
         return (
-            <FullPageCentered background={"#ccf6c8"} >
+            <FullPageCentered background={"#ccf6c8"}>
                 <h2>Processing Medication</h2>
                 <List items={inquiryDetails}>
                     <p>Date ready for collection:</p>
-                    <input type={"date"} min={today} onChange={e => setReadyDate(e.target.value)} value={readyDate} />
+                    <input type={"date"} min={today} onChange={e => setReadyDate(e.target.value)} value={readyDate}/>
                 </List>
                 <Button variant="primary" onClick={e => submit(e)}>
                     Let the care home know!
@@ -72,16 +76,4 @@ const EmailConfirmation = (props) => {
     }
 }
 
-
-// <Form>
-//     <h1>Confirming medication order</h1>
-//     <p>The date this medication should be available is:</p>
-//     <Form.Group controlId="date">
-//         <Form.Control type="date" min={today} onChange={e => setReadyDate(e.target.value)} />
-//     </Form.Group>
-//     <Button variant="primary" onClick={e => submit(e)}>
-//         Confirm
-//     </Button>
-// </Form>
-
-export default EmailConfirmation;
+export default EmailSetDate;
