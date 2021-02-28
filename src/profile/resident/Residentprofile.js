@@ -105,7 +105,10 @@ const Residentprofile = (props) => {
                     guardianName={props.guardName}
                     bio={props.bio}
                     handleClose={() => setEditForm(false)} 
-                    handleSubmission={() => props.handleSubmission()}
+                    handleSubmission={() => {
+                        setEditForm(false);
+                        props.handleSubmission();
+                    }}
                 />}
         </main>
     );
