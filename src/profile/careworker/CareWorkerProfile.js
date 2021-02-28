@@ -30,25 +30,18 @@ const CareWorkerProfile = (props) => {
             })
     }
 
-    // const getResDosages = () => {
-    //     fetch(`${backendUrl}/medication/schedule/?CareWorkerId=${cwId}`)
-    //         .then(r => r.json())
-    //         .then(r => {
-    //             console.log(r)
-    //             const dosages = r.map(x => {
-    //                 return {...x, time: new Date(x.time), CareWorker: x.CareWorkerName.split(" ")[0], dose: x.dose, medicationName:x.medicationName}
-    //             })
-    //             setMedicationDoses(dosages);
-    //         })
-    // }
+    const handleSubmission = () => {
+        setEditForm(false);
+        props.handleSubmission();
+    }
 
     function submit(e) {
         e.preventDefault();
         (archived ? archived=false : archived=true);
         const data = { careWorkerId, archived };
         console.log(data);
-        fetch(`${backendUrl}/careWorker`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        window.location.reload(false);
+        fetch(`${backendUrl}/careWorker`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     let CareWorkerImageSection;
@@ -93,7 +86,7 @@ const CareWorkerProfile = (props) => {
                     firstName={props.firstName}
                     surName={props.surName}
                     handleClose={() => setEditForm(false)} 
-                    handleSubmission={() => props.handleSubmission()}
+                    handleSubmission={() => handleSubmission()}
                 />}
         </main>
     );

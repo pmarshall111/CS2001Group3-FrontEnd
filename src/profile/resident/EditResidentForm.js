@@ -21,8 +21,8 @@ const EditResidentForm = (props) => {
         e.preventDefault();
         const data = { firstName, surName, guardianName, age, residentId, bio }
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        props.handleSubmission();
+        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     return (

@@ -18,8 +18,8 @@ const EditCareWorkerForm = (props) => {
         e.preventDefault();
         const data = { firstName, surName, careWorkerId }
         console.log(data);
-        fetch(`${backendUrl}/careWorker`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        props.handleSubmission();
+        fetch(`${backendUrl}/careWorker`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     return (

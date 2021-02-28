@@ -50,8 +50,8 @@ const Residentprofile = (props) => {
         (archived ? archived=false : archived=true);
         const data = { residentId, archived };
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        window.location.reload(false);
+        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     let residentImageSection;

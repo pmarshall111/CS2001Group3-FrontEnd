@@ -11,13 +11,14 @@ import { backendUrl } from "../../config";
 const AddCareWorkerForm = (props) => {
     const [firstName, setFirstName] = useState();
     const [surName, setSurName] = useState();
+    const {careHomeId} = props;
 
     const submit = e => {
         e.preventDefault();
-        const data = { firstName, surName }
+        const data = { firstName, surName, careHomeId }
         console.log(data);
-        fetch(`${backendUrl}/careWorker`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        props.handleSubmission();
+        fetch(`${backendUrl}/careWorker`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     return (

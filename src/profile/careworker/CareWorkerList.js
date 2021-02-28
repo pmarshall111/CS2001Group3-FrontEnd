@@ -20,7 +20,7 @@ class CareWorkerList extends React.Component {
     }
 
     getDataFromDb() {
-        fetch(`${backendUrl}/careWorker/all?careHomeId=7`)
+        fetch(`${backendUrl}/careWorker/all?careHomeId=${this.props.careHomeId}`)
             .then(response => response.json())
             .then(response => {
                 console.log(response)
@@ -31,10 +31,8 @@ class CareWorkerList extends React.Component {
     }
 
     handleSubmission() {
-        fetch(`${backendUrl}/careWorker`, {method: "POST", body: "", headers: {"Content-Type": "application/json"}})
-            .then(response => this.getDataFromDb());
         this.setState({showForm: false})
-        window.location.reload(false);
+        this.getDataFromDb();
     }
 
     render() {
@@ -84,6 +82,7 @@ class CareWorkerList extends React.Component {
                     show={showForm}
                     handleClose={() => this.setState({showForm: false})} 
                     handleSubmission={() => this.handleSubmission()}
+                    careHomeId={this.props.careHomeId}
                 />}
             </main>
         );

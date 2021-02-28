@@ -48,7 +48,7 @@ class App extends React.Component {
         //         this.setState({medicationDoses: dosages})
         //     })
 
-        fetch(`${backendUrl}/medication/schedule/all/?careHomeId=7`)
+        fetch(`${backendUrl}/medication/schedule/all/?careHomeId=0`)
             .then(r => r.json())
             .then(r => {
                 console.log(r)
@@ -101,8 +101,8 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <Dashboard />} />
                 <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
                 <Route exact path="/email" component={EmailPage} />
-                <Route path="/resident" render={ ()=> <ResidentsList/> } />
-                <Route path="/careWorker" render={ ()=> <CareWorkerList/> } />
+                <Route path="/resident" render={ ()=> <ResidentsList careHomeId={this.state.careHome.id} /> } />
+                <Route path="/careWorker" render={ ()=> <CareWorkerList careHomeId={this.state.careHome.id} /> } />
                 <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
                 <Route path="/email/set-date" component={EmailSetDate} />
                 <Route path="/email/inquiry" component={EmailInquiry} />

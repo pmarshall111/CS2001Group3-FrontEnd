@@ -17,10 +17,10 @@ const AddResidentForm = (props) => {
 
     const submit = e => {
         e.preventDefault();
-        const data = { firstName, surName, guardianName, age, bio }
+        const data = { firstName, surName, guardianName, age, bio, careHomeId: props.careHomeId }
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        props.handleSubmission();
+        fetch(`${backendUrl}/resident`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     return (
