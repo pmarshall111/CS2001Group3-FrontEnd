@@ -45,7 +45,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://rg-group.co.uk/wp-content/uploads/2019/08/CareHome1.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -63,7 +63,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://www.practicalpainmanagement.com/sites/default/files/imagecache/lightbox-large/images/2016/07/18/14253266_M.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -81,7 +81,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://cdn.mos.cms.futurecdn.net/MCTaifsDFHvU7pJ9uKmjzY.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -100,7 +100,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://helpr.org.uk/wp-content/uploads/2018/04/caring-staff.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -120,7 +120,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://thumbs.dreamstime.com/b/task-list-icon-logo-illustration-summer-icons-set-outline-holiday-tour-travel-vector-simple-modern-graphic-flat-design-159161578.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -138,7 +138,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://www.pngitem.com/pimgs/m/176-1760538_download-alert-png-clipart-alert-clip-art-transparent.png"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
@@ -156,7 +156,7 @@ const Dashboard = () => {
               <Card.Img
                 variant="top"
                 src="https://mmo.aiircdn.com/326/5e8b2443bb37b.jpg"
-                style={{ height: 150 }}
+                style={{ height: 125 }}
               />
               <Card.Body>
                 <Card.Text>
