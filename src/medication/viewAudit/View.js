@@ -1,4 +1,5 @@
-import React, { Component, useState } from 'react';
+
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import DatePicker from "react-datepicker";
@@ -6,28 +7,33 @@ import './ViewAudit.css' ;
 
 import "react-datepicker/dist/react-datepicker.css";
 
-class View extends Component{
+class View extends React.Component{
   constructor(props){
     super(props);
 
     this.state ={
-      audits: [],
+      audits: []
+      // isMorningCount: '',
+      // countDoneOnDate: '',
+      // cyclePredictedToEndOn: '',
+      // count: ''
     };
 
-    const PickDay = () => {
-      const [startDate, setStartDate] = useState(new Date());
-      return (
-        <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-  );
-};
+//     const PickDay = () => {
+//       const [startDate, setStartDate] = useState(new Date());
+//       return (
+//         <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+//   );
+// };
   }
 
     componentDidMount() {
       // get all entities - GET
-      fetch("http://localhost:8080/viewAll", {
+      fetch('http://localhost:8080/show?medCountId={this.props.medCountId}', {
     "method": "GET",
     "headers": {
-      'Content-Type': 'application/json',
+      "content-type": "application/json",
+      "accept": "application/json"
     }
   })
   .then(response => response.json())
@@ -36,37 +42,37 @@ class View extends Component{
       audits: response
     })
   })
-  .catch(err => { console.log(err);
+  .catch(error => { console.log(error);
   });
 
     }
 
-    renderTableData(){
-      return this.state.audits.map((audit, index) =>{
-        const {medCountId, count, countDoneOnDate, cyclePredictedToEndOn, isMorningCount,medForResId} = audit
-        return(
-          <tr key={medCountId}>
-            <td>{medCountId}</td>
-            <td>{count}</td>
-            <td>{countDoneOnDate}</td>
-            <td>{cyclePredictedToEndOn}</td>
-            <td>{isMorningCount}</td>
-            <td>{medForResId}</td>
-          </tr>
-        )
-      })
-    }
+    // renderTableData(){
+    //   return this.state.audits.map((audit, index) =>{
+    //     const {medCountId, count, countDoneOnDate, cyclePredictedToEndOn, isMorningCount,medForResId} = audit
+    //     return(
+    //       <tr key={this.medCountId}>
+    //         <td>{this.medCountId}</td>
+    //         <td>{this.count}</td>
+    //         <td>{this.countDoneOnDate}</td>
+    //         <td>{this.cyclePredictedToEndOn}</td>
+    //         <td>{this.isMorningCount}</td>
+    //         <td>{this.medForResId}</td>
+    //       </tr>
+    //     )
+    //   })
+    // }
 
 
   render(){
     return(
-      <div className="container" id ="main">
+      <div className="container"id ="main">
         <div className="row justify-content-center" id ="main2">
 
             <h1 className="display-4 text-center">View Historic Audit</h1>
             <input placeholder="Selected date" type="date" id="date-picker-example" class="form-control datepicker"></input>
 
-            <DatePicker type="date" id="date-pick" 
+            <DatePicker type="date" id="date-pick"
             selected={this.date}
             onSelect={this.handleDateSelect} //when day is clicked
             onChange={this.handleDateChange} //only when value has changed
@@ -74,7 +80,7 @@ class View extends Component{
 
             <Table
             data-toggle = "table"
-            data-url="http://localhost:8080/viewAll"
+            data-url="http://localhost:8080/show?medCountId={this.props.medCountId}"
             data-search ="true"
             data-pagination = "true"
             responsive>
@@ -83,13 +89,23 @@ class View extends Component{
                   <th>#</th>
                     <th data-field="name"> Patient Name </th>
                     <th data-field="name"> Medication </th>
-                    <th data-field="date"data-sortable ="true data-field="id> Date Recorded </th>
+                    <th data-field="date"data-sortable ="true"> Date Recorded </th>
                     <th data-field="number"> Day Count </th>
                     <th data-field="number"> Evening Count </th>
                     <th data-field="number"> Total Count </th>
                     <th data-field="name"> Staff Name </th>
                 </tr>
               </thead>
+              <tbody>
+              <tr>
+                <td>{this.medCountId}</td>
+                <td>{this.count}</td>
+                <td>{this.countDoneOnDate}</td>
+                <td>{this.cyclePredictedToEndOn}</td>
+                <td>{this.isMorningCount}</td>
+                <td>{this.medForResId}</td>
+              </tr>
+              </tbody>
 
             </Table>
 
@@ -97,6 +113,7 @@ class View extends Component{
       </div>
     );
   }
+
 }
 
 export default View;

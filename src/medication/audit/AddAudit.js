@@ -24,25 +24,25 @@ class AddAudit extends React.Component {
       audits: [prevState.isMorningCount, prevState.countDoneOnDate, prevState.cyclePredictedToEndOn, prevState.count]
     }));
   }
-//   componentDidMount() {
-//     // get all entities - GET
-//     fetch("http://localhost:8080", {
-//   "method": "GET",
-//   "headers": {
-//     'Content-Type': 'application/json',
-//   }
-// })
-// .then(response => response.json())
-// .then(response => {
-//   this.setState({
-//     audits: response
-//   })
-// })
-// .catch(err => { console.log(err);
-// });
+  componentDidMount() {
+    // get all entities - GET
+    fetch("http://localhost:8080/show", {
+  "method": "GET",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json"
+  }
+  })
+  .then(response => response.json())
+  .then(response => {
+  this.setState({
+    audits: response
+  })
+  })
+  .catch(err => { console.log(err);
+  });
 
-//   }
-
+  }
   create(e) {
     // add entity - POST
     fetch("http://localhost:8080/addAudit", {
@@ -119,7 +119,8 @@ class AddAudit extends React.Component {
                     id="isMorningCount"
                     type="checkbox"
                     className="form-control"
-                    value={this.state.isMorningCount}
+                    value= {this.state.isMorningCount}
+                    onClick={true}
                     onChange={(e) => this.handleChange({ count: e.target.value })}
                     required
                     />
@@ -147,8 +148,9 @@ class AddAudit extends React.Component {
                     />
                 </label>
                 <input type="submit" value="Submit Audit" onClick={(e) => this.create(e)}/>
-        
+
               </form>
+
             </div>
           </div>
 
@@ -158,6 +160,8 @@ class AddAudit extends React.Component {
 
 
   }
+
+
 }
 
 

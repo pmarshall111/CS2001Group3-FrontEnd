@@ -17,13 +17,13 @@ class App extends Component {
               <Link to={'/audit'} className="nav-link">Add New Audit</Link>
               <Link to={'/addMedication'} className="nav-link">Add Medication</Link>
               <Link to={'/view'} className="nav-link">View Audits</Link>
-
           </nav>
           <Switch>
 
               <Route path='/addMedication' component={AddMedication} />
               <Route path='/audit' component={AddAudit} />
               <Route path='/view' component={View} />
+
           </Switch>
         </div>
       </Router>
