@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router";
-import EmailPage from "../email/EmailPage";
 import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
@@ -39,7 +37,7 @@ const Dashboard = () => {
     <div>
       <Container fluid="md">
         <h1>Welcome to CareRUs</h1>
-        <Row md={4}>
+        <Row md={3}>
           <Col style={{ marginTop: "20px" }}>
             <Card style={{ width: "15rem" }}>
               <Card.Img
@@ -62,15 +60,13 @@ const Dashboard = () => {
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
-                src="https://www.practicalpainmanagement.com/sites/default/files/imagecache/lightbox-large/images/2016/07/18/14253266_M.jpg"
+                src="https://176g4u2eqkgm30b0371yje33-wpengine.netdna-ssl.com/wp-content/uploads/2018/04/image-11.png"
                 style={{ height: 125 }}
               />
               <Card.Body>
-                <Card.Text>
-                  Click to view information about Medications
-                </Card.Text>
-                <Button variant="primary" onClick={handleMedication}>
-                  View Medications
+                <Card.Text>Click to view information about Alerts</Card.Text>
+                <Button variant="primary" onClick={handleAlerts}>
+                  View Alerts
                 </Button>
               </Card.Body>
             </Card>
@@ -95,7 +91,7 @@ const Dashboard = () => {
             </Card>
           </Col>
 
-          <Col style={{ marginTop: "20px" }}>
+          <Col style={{ marginTop: "10px" }}>
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
@@ -112,10 +108,8 @@ const Dashboard = () => {
               </Card.Body>
             </Card>
           </Col>
-        </Row>
 
-        <Row md={4}>
-          <Col style={{ marginTop: "0px", marginLeft: "130px" }}>
+          <Col style={{ marginTop: "10px" }}>
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
@@ -133,25 +127,7 @@ const Dashboard = () => {
             </Card>
           </Col>
 
-          <Col style={{ marginTop: "0px" }}>
-            <Card style={{ width: "15rem" }}>
-              <Card.Img
-                variant="top"
-                src="https://www.pngitem.com/pimgs/m/176-1760538_download-alert-png-clipart-alert-clip-art-transparent.png"
-                style={{ height: 125 }}
-              />
-              <Card.Body>
-                <Card.Text>
-                  Click to view more information about Alerts
-                </Card.Text>
-                <Button variant="primary" onClick={handleAlerts}>
-                  View Alerts
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col style={{ marginTop: "0px" }}>
+          <Col style={{ marginTop: "10px" }}>
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
