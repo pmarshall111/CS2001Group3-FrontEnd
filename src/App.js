@@ -1,20 +1,22 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
 
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import PharmacyPage from "./pharmacy/PharmacyPage";
 import EmailPage from "./email/EmailPage";
 import EmailSetDate from "./email/EmailSetDate";
 import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
-import {backendUrl} from "./config";
+import { backendUrl } from "./config";
 import EmailReadyForCollection from "./email/EmailReadyForCollection";
 import MedicationForm from "./medication/MedicationForm";
 import Timeline from "./shared/Timeline";
 import ParentTooltip from "./shared/tooltip/ParentTooltip";
+import { createBrowserHistory as history } from "history";
 
 import Medication_TEMP from "./medication/Medication_TEMP";
 import FileUploadBtn from "./shared/FileUploadBtn";
