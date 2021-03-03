@@ -6,13 +6,17 @@ import DatePicker from "react-datepicker";
 import './ViewAudit.css' ;
 
 import "react-datepicker/dist/react-datepicker.css";
+import {convertToYYYYMMDD} from "../../helper/convertTimestampToDate";
+import Button from "react-bootstrap/Button";
+import {datesAreSameDay} from "../../helper/dateHelper";
 
 class View extends React.Component{
   constructor(props){
     super(props);
 
     this.state ={
-      audits: []
+      audits: [],
+      selectedDate: null
       // isMorningCount: '',
       // countDoneOnDate: '',
       // cyclePredictedToEndOn: '',
@@ -27,90 +31,83 @@ class View extends React.Component{
 // };
   }
 
-    componentDidMount() {
-      // get all entities - GET
-      fetch('http://localhost:8080/show?medCountId={this.props.medCountId}', {
-    "method": "GET",
-    "headers": {
-      "content-type": "application/json",
-      "accept": "application/json"
-    }
-  })
-  .then(response => response.json())
-  .then(response => {
-    this.setState({
-      audits: response
+  componentDidMount() {
+    // get all entities - GET
+    fetch(`http://localhost:8080/show?medCountId=${this.props.medCountId}`, {
+      "method": "GET",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      }
     })
-  })
-  .catch(error => { console.log(error);
-  });
+        .then(response => response.json())
+        .then(response => {
+          this.setState({
+            audits: response
+          })
+        })
+        .catch(error => { console.log(error);
+        });
 
+  }
+
+  renderTableData(){
+    let auditsToDisplay = this.state.audits;
+    if (this.state.selectedDate != null) {
+      auditsToDisplay = auditsToDisplay.filter((x) => {
+        return datesAreSameDay(new Date(convertToYYYYMMDD(x.countDoneOnDate)), this.state.selectedDate);
+      })
     }
-
-    // renderTableData(){
-    //   return this.state.audits.map((audit, index) =>{
-    //     const {medCountId, count, countDoneOnDate, cyclePredictedToEndOn, isMorningCount,medForResId} = audit
-    //     return(
-    //       <tr key={this.medCountId}>
-    //         <td>{this.medCountId}</td>
-    //         <td>{this.count}</td>
-    //         <td>{this.countDoneOnDate}</td>
-    //         <td>{this.cyclePredictedToEndOn}</td>
-    //         <td>{this.isMorningCount}</td>
-    //         <td>{this.medForResId}</td>
-    //       </tr>
-    //     )
-    //   })
-    // }
+    return auditsToDisplay.map((audit, index) =>{
+      const {medCountId, count, countDoneOnDate, cyclePredictedToEndOn, isMorningCount,medForResId} = audit
+      return(
+          <tr key={medCountId}>
+            <td>{medCountId}</td>
+            <td>{count}</td>
+            <td>{convertToYYYYMMDD(countDoneOnDate)}</td>
+            <td>{convertToYYYYMMDD(cyclePredictedToEndOn)}</td>
+            <td>{isMorningCount}</td>
+            <td>{medForResId}</td>
+          </tr>
+      )
+    })
+  }
 
 
   render(){
     return(
-      <div className="container"id ="main">
-        <div className="row justify-content-center" id ="main2">
+        <div className="container"id ="main">
+          <div className="row justify-content-center" id ="main2">
 
             <h1 className="display-4 text-center">View Historic Audit</h1>
-            <input placeholder="Selected date" type="date" id="date-picker-example" class="form-control datepicker"></input>
 
-            <DatePicker type="date" id="date-pick"
-            selected={this.date}
-            onSelect={this.handleDateSelect} //when day is clicked
-            onChange={this.handleDateChange} //only when value has changed
-            ></DatePicker>
+            <DatePicker type="date" id="date-pick" selected={this.state.selectedDate} onChange={e => this.setState({selectedDate: new Date(e)})} />
+            <Button onClick={() => this.setState({selectedDate: null})}>Clear Date</Button>
 
             <Table
-            data-toggle = "table"
-            data-url="http://localhost:8080/show?medCountId={this.props.medCountId}"
-            data-search ="true"
-            data-pagination = "true"
-            responsive>
+                data-toggle = "table"
+                data-url="http://localhost:8080/show?medCountId={this.props.medCountId}"
+                data-search ="true"
+                data-pagination = "true"
+                responsive>
               <thead>
-                <tr>
-                  <th>#</th>
-                    <th data-field="name"> Patient Name </th>
-                    <th data-field="name"> Medication </th>
-                    <th data-field="date"data-sortable ="true"> Date Recorded </th>
-                    <th data-field="number"> Day Count </th>
-                    <th data-field="number"> Evening Count </th>
-                    <th data-field="number"> Total Count </th>
-                    <th data-field="name"> Staff Name </th>
-                </tr>
+              <tr>
+                <th>#</th>
+                <th data-field="name"> Patient Name </th>
+                <th data-field="name"> Medication </th>
+                <th data-field="date"data-sortable ="true"> Date Recorded </th>
+                <th data-field="number"> Day Count </th>
+                <th data-field="number"> Evening Count </th>
+                <th data-field="number"> Total Count </th>
+                <th data-field="name"> Staff Name </th>
+              </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>{this.medCountId}</td>
-                <td>{this.count}</td>
-                <td>{this.countDoneOnDate}</td>
-                <td>{this.cyclePredictedToEndOn}</td>
-                <td>{this.isMorningCount}</td>
-                <td>{this.medForResId}</td>
-              </tr>
+              {this.renderTableData()}
               </tbody>
-
             </Table>
-
+          </div>
         </div>
-      </div>
     );
   }
 
