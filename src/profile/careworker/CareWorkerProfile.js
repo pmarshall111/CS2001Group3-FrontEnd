@@ -55,7 +55,7 @@ const CareWorkerProfile = (props) => {
     return (
         <main>
             <TitleBar title={"CareHome Worker Profile"}>
-                <Button variant="primary" onClick={() => setEditForm(true)}>edit</Button>
+                <Button variant="primary" onClick={() => setEditForm(true)}>Edit profile</Button>
             </TitleBar>
             <div className="container-fluid">
                 <div className="row align-items-start">

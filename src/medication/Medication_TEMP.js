@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import MedicationForm from "./MedicationForm";
+import NewMedicationForm from "./NewMedicationForm";
 
 const MedicationTemp = (props) => {
     const {pharmacies} = props;
@@ -8,7 +8,7 @@ const MedicationTemp = (props) => {
     return (
         <div>
             <button onClick={() => setShowForm(true)}>Add new Medication!</button>
-            {showForm && <MedicationForm
+            {showForm && <NewMedicationForm
                 resId={0}
                 resName="Roger"
                 pharmacies={pharmacies}
