@@ -9,3 +9,9 @@ export const roundDateToNearestMins = (inDate, mins) => {
     outDate.setMinutes(roundedMins,0,0);
     return outDate;
 }
+
+export const datesAreSameDay = (thisDate, thatDate) => {
+    return (thisDate.getFullYear() === thatDate.getFullYear()) &&
+        (thisDate.getMonth() === thatDate.getMonth()) &&
+        (thisDate.getDate() === thatDate.getDate());
+}

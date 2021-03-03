@@ -1,0 +1,40 @@
+
+div.container {
+  padding-top: 20px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  padding-left: 2px;
+}
+
+
+div.DatePicker{
+  color: #cef2f0;
+}
+
+.count-intros {
+  display: grid;
+  place-items: center;
+  margin: 20px;
+}
+
+.count-date-picker {
+  display: grid;
+  place-items: center;
+  grid-template-columns: 100%;
+  grid-gap: 10px;
+}
+
+.count-date-picker > div {
+  display: grid;
+  grid-template-columns: 30px auto 30px;
+  place-items: center;
+}
+
+.right-pointer {
+  grid-column: 3;
+  grid-row: 1
+}
+
+.pointer {
+  cursor: pointer;
+}

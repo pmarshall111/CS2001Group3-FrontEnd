@@ -57,7 +57,9 @@ class ResidentsList extends React.Component {
                         firstName={firstName}
                         surName={surName}
                         archived={archived}
-                    handleSubmission={() => this.handleSubmission()}/>
+                    handleSubmission={() => this.handleSubmission()}
+                    pharmacies={this.props.pharmacies}
+                    />
                 )
             }
         }
