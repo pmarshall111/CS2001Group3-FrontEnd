@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
+import { backendUrl } from "../config";
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
+  const [careWorkers, setCareWorkers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${backendUrl}/careWorker/all?careHomeId=7`)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+           if (!response.status || response.status === 200) {
+            setCareWorkers(response)
+            }
+        })
+
+    fetch(`${backendUrl}/task/all?careHomeId=7`)
+        .then(response => response.json())
+        .then(response => {
+              console.log(response)
+            if (!response.status || response.status === 200) {
+              setTodos(response)
+            }
+        })  
+  }, [])
 
   const addTodo = todo => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
-
     const newTodos = [todo, ...todos];
-
     setTodos(newTodos);
-    console.log(...todos);
+    fetch(`${backendUrl}/task`,
+    {method: "POST", body: JSON.stringify({text:todo.text}), headers: { "Content-Type": "application/json" }});
+    console.log(JSON.stringify({text:todo.text}));
   };
 
   const updateTodo = (todoId, newValue) => {
@@ -39,17 +61,28 @@ function TodoList() {
     });
     setTodos(updatedTodos);
   };
+  
+  const listOfTodos = todos.map((x, index) => <Todo 
+                                      id = {x.taskId}
+                                      isComplete = {x.isComplete}
+                                      text0 = {x.text}
+                                      todos={todos}
+                                      date={Date(x.dueTime)}
+                                      cwId = {x.careWorkerId}
+                                      careWorkers={careWorkers}
+                                      completeTodo={completeTodo}
+                                      removeTodo={removeTodo}
+                                      updateTodo={updateTodo}
+                                      index = {index}  />)
+  
+//return (<div>{listOfTodos}</div>)
 
   return (
+    
     <>
-      <h1>Today's Task's</h1>
+      <h1>Today's Tasks</h1>
       <TodoForm onSubmit={addTodo} />
-      <Todo
-        todos={todos}
-        completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
+      <div>{listOfTodos}</div>
     </>
   );
 }
