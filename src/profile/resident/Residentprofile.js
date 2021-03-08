@@ -6,15 +6,19 @@ import EditResidentForm from "./EditResidentForm";
 import {backendUrl, imagesUrl} from "../../config";
 import FileUploadBtn from "../../shared/FileUploadBtn";
 import Timeline from "../../shared/Timeline";
+import { useHistory } from "react-router-dom";
+import MedicationCountsPage from "../../medication/viewAudit/MedicationCountPage";
 
 
 
 const Residentprofile = (props) => {
-    const {resId, firstName} = props;
+    const {resId, firstName, pharmacies} = props;
 
     const [editForm, setEditForm] = useState(false);
     const [residentImage, setResidentImage] = useState("");
     const [medicationDoses, setMedicationDoses] = useState([]);
+
+    const history = useHistory();
 
     let archived = props.archived;
     let residentId = props.resId;
@@ -67,12 +71,16 @@ const Residentprofile = (props) => {
         residentImageSection = <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} />
     }
 
+    if (window.location.pathname.split("/")[3] === "medication") {
+        return <MedicationCountsPage resName={firstName} resId={resId} pharmacies={pharmacies} />
+    }
+
     //oldImgSrc="https://i.imgur.com/MI2Pf2H.jpg"
     return (
         <main>
             <TitleBar title={"Resident Profile"}>
-                <Button variant="primary" size="lg" onClick={() => setEditForm(true)}>edit</Button>
-                <Button variant="primary" > medication [coming soon™]</Button>
+                <Button variant="primary" size="lg" onClick={() => setEditForm(true)}>Edit Profile</Button>
+                <Button variant="primary" size="lg" onClick={() => history.push(`/resident/${props.resId}/medication`)}> Medication Details</Button>
             </TitleBar>
             <div className="container-fluid">
                 <div className="row align-items-start">

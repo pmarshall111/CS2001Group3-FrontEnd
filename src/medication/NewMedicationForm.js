@@ -7,7 +7,7 @@ import {backendUrl} from "../config";
 
 import "./MedicationForm.css"
 
-const MedicationForm = (props) => {
+const NewMedicationForm = (props) => {
     const {resId, resName, pharmacies, show, handleClose, handleSubmission} = props;
 
     let [doseTimes, setDoseTimes] = useState([])
@@ -104,4 +104,4 @@ const MedicationForm = (props) => {
 );
 }
 
-export default MedicationForm;
+export default NewMedicationForm;

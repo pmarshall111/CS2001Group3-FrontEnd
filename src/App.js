@@ -1,20 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import PharmacyPage from "./pharmacy/PharmacyPage";
 import EmailPage from "./email/EmailPage";
 import EmailSetDate from "./email/EmailSetDate";
 import EmailInquiry from "./email/EmailInquiry";
 import AlertsPage from "./alerts/AlertsPage";
-import {backendUrl} from "./config";
+import { backendUrl } from "./config";
 import EmailReadyForCollection from "./email/EmailReadyForCollection";
-import MedicationForm from "./medication/MedicationForm";
+import NewMedicationForm from "./medication/NewMedicationForm";
 import Timeline from "./shared/Timeline";
 import ParentTooltip from "./shared/tooltip/ParentTooltip";
+import { createBrowserHistory as history } from "history";
 
 import Medication_TEMP from "./medication/Medication_TEMP";
 import FileUploadBtn from "./shared/FileUploadBtn";
@@ -23,6 +25,9 @@ import ResidentsList from './profile/resident/ResidentsList';
 import CareWorkerList from './profile/careworker/CareWorkerList';
 import Dashboard from "./Dashboard/Dashboard";
 import Residentprofile from "./profile/resident/Residentprofile";
+import AddMedication from "./medication/medication/AddMedication";
+import MedicationCountForm from "./medication/audit/MedicationCountForm";
+import MedicationCountPage from "./medication/viewAudit/MedicationCountPage";
 
 class App extends React.Component {
     constructor(props) {
@@ -102,7 +107,7 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <Dashboard />} />
                 <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
                 <Route exact path="/email" component={EmailPage} />
-                <Route path="/resident" render={ ()=> <ResidentsList careHomeId={this.state.careHome.id} /> } />
+                <Route path="/resident" render={ ()=> <ResidentsList careHomeId={this.state.careHome.id} pharmacies={this.state.pharmacies} /> } />
                 <Route path="/careWorker" render={ ()=> <CareWorkerList careHomeId={this.state.careHome.id} /> } />
                 <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
                 <Route path="/email/set-date" component={EmailSetDate} />
@@ -120,12 +125,15 @@ class App extends React.Component {
                                 careHomeId={this.state.careHome.id}
                     />
                 } />
-                <Route path="/medication-form" render={(props) => <MedicationForm {...props} resId={0} pharmacies={this.state.pharmacies} />} />
+                <Route path="/medication-form" render={(props) => <NewMedicationForm {...props} resId={0} pharmacies={this.state.pharmacies} />} />
                 <Route path="/timeline" render={(props) =>
                     <div>
                         <Timeline dosages={this.state.medicationDoses} />
                     </div>
                 } />
+                <Route path='/addMedication' component={AddMedication} />
+                <Route path='/audit' component={MedicationCountForm} />
+                <Route path='/view' component={MedicationCountPage} />
             </Router>
         );
     }
