@@ -39,13 +39,14 @@ const EditCareWorkerForm = (props) => {
                             onChange={e => setSurName(e.target.value)} value={surName}
                         />
                     </Form.Group>
-                    <br></br>
+                <Modal.Footer>
                     <Button variant="secondary" onClick={props.handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={e => submit(e)}>
-                        Edit CareHome Worker
+                        Edit Worker
                     </Button>
+                </Modal.Footer>
                 </Form>
             </Modal.Body>
         </Modal>

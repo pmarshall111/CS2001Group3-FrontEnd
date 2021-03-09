@@ -19,6 +19,10 @@ const Dashboard = () => {
     history.push("/pharmacy");
   };
 
+  const handleCareWorker = () => {
+    history.push("/careWorker");
+  };
+
   return (
     <div>
       <Container fluid="md">
@@ -86,7 +90,7 @@ const Dashboard = () => {
                 <Card.Text>
                   Click to view more information about CareWorkers
                 </Card.Text>
-                <Button variant="primary">View CareWorkers</Button>
+                <Button variant="primary" onClick={handleCareWorker}>View CareWorkers</Button>
               </Card.Body>
             </Card>
           </Col>

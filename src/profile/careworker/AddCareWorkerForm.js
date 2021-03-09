@@ -38,13 +38,14 @@ const AddCareWorkerForm = (props) => {
                             onChange={e => setSurName(e.target.value)} value={surName}
                         />
                     </Form.Group>
-                    <br></br>
+                <Modal.Footer>
                     <Button variant="secondary" onClick={props.handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={e => submit(e)}>
                         Add new CareHome Worker
                     </Button>
+                </Modal.Footer>
                 </Form>
             </Modal.Body>
         </Modal>
