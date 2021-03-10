@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import "./dashboard.css";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -34,9 +35,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className="home_page">
+      <h1 className="welcome">Welcome to CareRUs</h1>
       <Container fluid="md">
-        <h1>Welcome to CareRUs</h1>
         <Row md={3}>
           <Col style={{ marginTop: "20px" }}>
             <Card style={{ width: "15rem" }}>
