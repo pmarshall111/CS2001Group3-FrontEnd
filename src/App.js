@@ -35,7 +35,7 @@ class App extends React.Component {
         this.state = {
             pharmacies:[],
             // careHome:{name: "abc", id: 0, email:"abc@aol.com"},
-            careHome:{id:7},
+            careHome:{id: 7},
             careHomeWorker:"Peter",
             medicationDoses: []
         }

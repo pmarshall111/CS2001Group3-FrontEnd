@@ -5,7 +5,7 @@ import "./CareWorkerProfile.css";
 import EditCareWorkerForm from "./EditCareWorkerForm";
 import {backendUrl, imagesUrl} from "../../config";
 import FileUploadBtn from "../../shared/FileUploadBtn";
-
+import Alert from 'react-bootstrap/Alert';
 
 
 const CareWorkerProfile = (props) => {
@@ -13,7 +13,9 @@ const CareWorkerProfile = (props) => {
 
     const [editForm, setEditForm] = useState(false);
     const [CareWorkerImage, setCareWorkerImage] = useState("");
-
+    const [operationMessage, setOperationMessage] = useState();
+    const [showAlert, setShowAlert] = useState(false);
+    
     let archived = props.archived;
     let careWorkerId = props.cwId;
 
@@ -44,6 +46,21 @@ const CareWorkerProfile = (props) => {
             .then(() => props.handleSubmission());
     }
 
+    function WorkerDelete(k) {
+        k.preventDefault();
+        fetch(`${backendUrl}/careWorker/?careWorkerId=${cwId}`, { method: "DELETE", headers: { "Content-Type": "application/json" } })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            if (response.status){
+                console.log(response.status)
+                setOperationMessage(response.operationMessage)
+                setShowAlert(true);
+            }
+        })
+        .then(() => props.handleSubmission());
+    }
+
     let CareWorkerImageSection;
     if (CareWorkerImage !== "") {
         CareWorkerImageSection = <div className={"profile-pic"} style={{"backgroundImage": `url(${imagesUrl}/careworker/${cwId})`}} alt="CareWorker profile image" />
@@ -55,7 +72,7 @@ const CareWorkerProfile = (props) => {
     return (
         <main>
             <TitleBar title={"CareHome Worker Profile"}>
-                <Button variant="primary" onClick={() => setEditForm(true)}>Edit profile</Button>
+                <Button variant="primary" size="lg" onClick={() => setEditForm(true)}>Edit profile</Button>
             </TitleBar>
             <div className="container-fluid">
                 <div className="row align-items-start">
@@ -66,16 +83,31 @@ const CareWorkerProfile = (props) => {
                             </div>
                             {CareWorkerImage !== "" ? <FileUploadBtn isCareWorker={true} id={cwId} name={firstName} onAddFile={() => getCwImg()} edit={true} /> : ""}
                         </div>
-                        <h1>{props.firstName} {props.archived ? "[ARCHIVED]" : ""}</h1>
-                        <h3>Contact Number: 02089991273</h3> 
-                        <h3>E-mail:example@hotmail.co.uk</h3>
-                        <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
+                        <h1>{props.firstName} {props.archived ? "[ARCHIVED]" : props.surName}</h1>
+                        <h3>{props.archived ? "" : "Contact Number: 02089991273"}</h3> 
+                        <h3>{props.archived ? "" : "E-mail:example@hotmail.co.uk"}</h3>
+                        
+                        <Button variant="secondary" size="lg" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
+                        <br></br><br></br>
+                        {archived? <Button variant="danger" size="lg" onClick={k => WorkerDelete(k)}> Delete </Button> : "" }
+                        
+                        {operationMessage&&showAlert?
+                        <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>
+                            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                            <p>
+                            {operationMessage}
+                            </p>
+                        </Alert>
+                        : ""
+                        }
                     </div>
                     <div className="col-md-6">
+                        {props.archived? "" : 
                         <div className={"CareWorker-bio"}>
                             <h1>Bio</h1>
                             <p>{props.bio}</p>
                         </div>
+                        }
                         {/* could add list of assigned to-dos */}
                     </div>
                 </div>

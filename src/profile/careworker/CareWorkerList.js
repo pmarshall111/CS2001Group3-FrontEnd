@@ -73,7 +73,7 @@ class CareWorkerList extends React.Component {
         return (
             <main>
                 <TitleBar title={"My CareHome Workers"}>
-                    <Button variant="primary" onClick={() => this.setState({showForm: true})}>Add new</Button>
+                    <Button variant="primary" size="lg" onClick={() => this.setState({showForm: true})}>Add new</Button>
                 </TitleBar>
                 <div className={"list"}>
                     {careWorkerPreviews}

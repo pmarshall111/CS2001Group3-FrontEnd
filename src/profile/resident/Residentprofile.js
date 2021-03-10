@@ -58,6 +58,12 @@ const Residentprofile = (props) => {
             .then(() => props.handleSubmission());
     }
 
+    function ResidentDelete(k) {
+        k.preventDefault();
+        fetch(`${backendUrl}/resident/?residentId=${resId}`, { method: "DELETE", headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
+    }
+
     let residentImageSection;
     if (residentImage !== "") {
         residentImageSection = <div className={"profile-pic"} style={{"backgroundImage": `url(${imagesUrl}/resident/${resId})`}} alt="Resident profile image" />
@@ -73,8 +79,8 @@ const Residentprofile = (props) => {
     return (
         <main>
             <TitleBar title={"Resident Profile"}>
-                <Button variant="primary" onClick={() => setEditForm(true)}>Edit Profile</Button>
-                <Button variant="primary" onClick={() => history.push(`/resident/${props.resId}/medication`)}> Medication Details</Button>
+                <Button variant="primary" size="lg" onClick={() => setEditForm(true)}>Edit Profile</Button>
+                <Button variant="primary" size="lg" onClick={() => history.push(`/resident/${props.resId}/medication`)}> Medication Details</Button>
             </TitleBar>
             <div className="container-fluid">
                 <div className="row align-items-start">
@@ -85,22 +91,33 @@ const Residentprofile = (props) => {
                             </div>
                             {residentImage !== "" ? <FileUploadBtn isResident={true} id={resId} name={firstName} onAddFile={() => getResImg()} edit={true} /> : ""}
                         </div>
-                        <h1>{props.firstName} {props.archived ? "[ARCHIVED]" : ""}</h1>
-                        <h3>Age: {props.age}</h3>
-                        <h3>Guardian: {props.guardName}</h3>
-                        <h3>Contact Number: 02089991273</h3> 
-                        <h3>E-mail:example@hotmail.co.uk</h3>
-                        <Button variant="secondary" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
+                        <h1>{props.firstName} {props.archived ? "[ARCHIVED]" : props.surName}</h1>
+                        {props.archived ? "": 
+                            <div>
+                                <h3>Age: {props.age} </h3>
+                                <h3>Guardian: {props.guardName} </h3>
+                                <h3>Contact Number: 02089991273 </h3>
+                                <h3>E-mail:example@hotmail.co.uk</h3>
+                            </div>
+                        }
+                        <br></br><br></br>
+                        <Button variant="secondary" size="lg" onClick={e => submit(e)}> {archived? "Restore" : "Archive"} </Button>
+                        <br></br><br></br>
+                        {archived? <Button variant="danger" size="lg" onClick={k => ResidentDelete(k)}> Delete </Button> : "" }
                     </div>
                     <div className="col-md-6">
+                    {props.archived? "" :
                         <div className={"resident-bio"}>
                             <h1>Bio</h1>
                             <p>{props.bio}</p>
                         </div>
+                    }
+                    {props.archived? "" :
                         <div>
                             <h1>Medication Schedule</h1>
                             <Timeline dosages={medicationDoses} />
                         </div>
+                    }
                     </div>
                 </div>
             </div>

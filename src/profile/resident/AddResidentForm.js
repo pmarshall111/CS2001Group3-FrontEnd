@@ -58,13 +58,14 @@ const AddResidentForm = (props) => {
                             onChange={e => setBio(e.target.value)} value={bio}
                         />
                     </Form.Group>
-                    <br></br>
+                <Modal.Footer>
                     <Button variant="secondary" onClick={props.handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={e => submit(e)}>
-                        Add new resident
+                        Add Resident
                     </Button>
+                </Modal.Footer>
                 </Form>
             </Modal.Body>
         </Modal>

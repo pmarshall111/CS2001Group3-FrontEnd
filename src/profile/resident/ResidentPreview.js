@@ -14,8 +14,10 @@ const ResidentPreview = (props) => {
     return (
         <Router>
             <div>
-                <div onClick={() => history.push(`/resident/${props.resId}`)}>
-                    {props.firstName} {props.archived ? "[ARCHIVED]" : ""}
+                <div class="list-group" onClick={() => history.push(`/resident/${props.resId}`)}>
+                <button type="button" class="list-group-item list-group-item-action">
+                        {props.firstName} {props.archived ? "[ARCHIVED]" : props.surName}
+                    </button>
                 </div>
             </div>
         </Router>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Button from 'react-bootstrap/Button'
 
 
 // import Button from "react-bootstrap/Button";
@@ -14,8 +15,10 @@ const CareWorkerPreview = (props) => {
     return (
         <Router>
             <div>
-                <div onClick={() => history.push(`/careWorker/${props.cwId}`)}>
-                    {props.firstName} {props.archived ? "[ARCHIVED]" : ""}
+                <div class="list-group" onClick={() => history.push(`/careWorker/${props.cwId}`)}>
+                    <button type="button" class="list-group-item list-group-item-action">
+                        {props.firstName} {props.archived ? "[ARCHIVED]" : props.surName}
+                    </button>
                 </div>
             </div>
         </Router>
