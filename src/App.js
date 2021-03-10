@@ -2,7 +2,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import Residentprofile from './profile/Residentprofile';
-import ResidentsList from './profile/ResidentsList';
 import TodoList from './DailyTask/TodoList';
 
 function App() {

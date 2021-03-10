@@ -67,13 +67,14 @@ function TodoList() {
                                       isComplete = {x.isComplete}
                                       text0 = {x.text}
                                       todos={todos}
-                                      date={Date(x.dueTime)}
+                                      date={x.dueTime}
                                       cwId = {x.careWorkerId}
+                                      name={x.careWorkerName}
                                       careWorkers={careWorkers}
                                       completeTodo={completeTodo}
                                       removeTodo={removeTodo}
                                       updateTodo={updateTodo}
-                                      index = {index}  />)
+                                      key = {index}  />)
   
 //return (<div>{listOfTodos}</div>)
 

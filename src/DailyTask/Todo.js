@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
-import Form from "react-bootstrap/Form";
+import React, { useEffect, useState } from 'react';
+// import Form from "react-bootstrap/Form";
 import TodoForm from './TodoForm';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 import { backendUrl } from "../config";
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 //component is called Todo, but is actually for rendering the list of todos.
 //move the logic for rendering all the todos into the todolist component and make each todo into this todo component.
-const Todo = ({ text0,isComplete,id,index,cwId, date, completeTodo, removeTodo, updateTodo, careWorkers }) => {
+const Todo = ({ name,text0,isComplete,id,cwId, date, completeTodo, removeTodo, updateTodo, careWorkers }) => {
   const [edit, setEdit] = useState({
     id: null,
     value: ''
   });
   const [careWorkerId, setCareWorkerId] = useState(cwId);
   const [text, setText] = useState(text0);
+  const [assignedWorker, setAssignedWorker] = useState(`#${cwId} ${name}`);
 
+
+
+  const handleSelect=(e) => {
+    setCareWorkerId(e);
+    updateDb(e); //value will be the id of the new careworker who is assigned this todo
+    // window.location.reload(false);
+  };
   const submitUpdate = value => {
     updateTodo(edit.id, value);
     setEdit({
@@ -41,18 +51,32 @@ const Todo = ({ text0,isComplete,id,index,cwId, date, completeTodo, removeTodo, 
   }
 
 
-  const careWorkerOptions = careWorkers.map(x => <option key={`careworker-${Math.floor(Math.random() * 10000)}`} value={x.careWorkerId}>{x.firstName}</option>);
+  const careWorkerOptions = careWorkers.map(x => <Dropdown.Item key={`careworker-${Math.floor(Math.random() * 10000)}`} onClick={() => setAssignedWorker(`#${x.careWorkerId} ${x.firstName} ${x.surName}`)} eventKey={x.careWorkerId}>{x.firstName}</Dropdown.Item>);
   
   return (
     
     <div
       className={isComplete ? 'todo-row complete' : 'todo-row'}
-      key={index}
+      key={id}
     >
       <div key={id} onClick={() => completeTodo(id)}>
         <h2>{text0}</h2> 
         <br></br>
-        <h5><b>Due Time:</b></h5> {date}
+        {date?
+          <div>
+            <h5><b>Due Time:</b></h5> 
+            <td>
+              {new Intl.DateTimeFormat("en-GB", {
+              dateStyle: 'full', 
+              timeStyle: 'short'
+              }).format(new Date(date))}
+            </td>
+          </div>
+        : "" }
+        <br></br>
+        <p>
+        <h4>Assigned to:</h4>{assignedWorker}
+        </p>
       </div>
       <div className='icons'>
         <RiCloseCircleLine
@@ -64,17 +88,14 @@ const Todo = ({ text0,isComplete,id,index,cwId, date, completeTodo, removeTodo, 
           onClick={() => setEdit({ id: id, value: text0 })}
           className='edit-icon'
         />
-        <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label></Form.Label>
-          <Form.Control value={careWorkerId} onChange={e => {
-            setCareWorkerId(e.target.value);
-            updateDb(e.target.value); //value will be the id of the new careworker who is assigned this todo
-          }}
-          as="select">
+        <DropdownButton
+              alignRight
+              title={cwId? "Re-assign" : "Assign worker"} 
+              id="dropdown-menu-align-right"
+              onSelect={handleSelect}
+               >
             {careWorkerOptions}
-          </Form.Control>
-        </Form.Group>
-        
+        </DropdownButton>
       </div>
     </div>
   );
