@@ -1,0 +1,24 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #222222;
+  text-align: center;
+}
+
+.logout-text {
+  text-align: center;
+}
+
+.login {
+  text-align: center;
+}
+
+.welcome-text {
+  text-align: center;
+}
+
+.todos {
+  text-align: center;
+}

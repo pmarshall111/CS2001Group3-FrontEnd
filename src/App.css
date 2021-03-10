@@ -2,6 +2,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .App-header {
@@ -160,4 +161,14 @@ h1 {
 
 .edit-icon {
   color: #fff;
+}
+.text-center {
+  margin-top: 30px;
+}
+.row {
+  margin-top: 30px;
+  table-layout: fixed;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
 }

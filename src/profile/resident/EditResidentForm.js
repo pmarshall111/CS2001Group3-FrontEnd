@@ -3,29 +3,31 @@ import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { backendUrl } from "../config";
+import { backendUrl } from "../../config";
 
 //Modal is used to have a pop-up box
 //Form.Group controlId= is used for accessibility apparently https://react-bootstrap.github.io/components/forms/
 
-const AddResidentForm = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [surName, setSurName] = useState("");
-    const [age, setAge] = useState("");
-    const [careHomeId, setCareHomeId] = useState("");
-    const [guardianName, setGuardianName] = useState("");
+const EditResidentForm = (props) => {
+    const [firstName, setFirstName] = useState(props.firstName||"");
+    const [surName, setSurName] = useState(props.surName||"");
+    const [age, setAge] = useState(props.age||"");
+    let residentId = props.resId;
+    const [guardianName, setGuardianName] = useState(props.guardianName||"");
+    const [bio, setBio] = useState(props.bio||"");
+
 
     const submit = e => {
         e.preventDefault();
-        const data = { firstName, surName, guardianName, age, careHomeId }
+        const data = { firstName, surName, guardianName, age, residentId, bio }
         console.log(data);
-        fetch(`${backendUrl}/resident`, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } });
-        props.handleSubmission();
+        fetch(`${backendUrl}/resident`, { method: "PUT", body: JSON.stringify(data), headers: { "Content-Type": "application/json" } })
+            .then(() => props.handleSubmission());
     }
 
     return (
         <Modal show={props.show} onHide={props.handleClose}>
-            <Modal.Header><Modal.Title>Add new resident</Modal.Title></Modal.Header>
+            <Modal.Header><Modal.Title>Edit resident</Modal.Title></Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group controlId="formFirstName">
@@ -48,14 +50,14 @@ const AddResidentForm = (props) => {
                     </Form.Group>
                     <Form.Group controlId="formAge">
                         <Form.Label>Age</Form.Label>
-                        <Form.Control type="number" placeholder="Enter numb"
+                        <Form.Control type="number" placeholder="Enter Age"
                             onChange={e => setAge(e.target.value)} value={age}
                         />
                     </Form.Group>
-                    <Form.Group controlId="formCareHomeId">
-                        <Form.Label>careHomeId</Form.Label>
-                        <Form.Control type="number" placeholder="Enter CareHomeId"
-                            onChange={e => setCareHomeId(e.target.value)} value={careHomeId}
+                    <Form.Group controlId="formBio">
+                        <Form.Label>Bio</Form.Label>
+                        <Form.Control as="textarea" rows={3} placeholder="Enter Bio"
+                            onChange={e => setBio(e.target.value)} value={bio}
                         />
                     </Form.Group>
                     <br></br>
@@ -63,7 +65,7 @@ const AddResidentForm = (props) => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={e => submit(e)}>
-                        Add new resident
+                        Edit resident
                     </Button>
                 </Form>
             </Modal.Body>
@@ -71,4 +73,4 @@ const AddResidentForm = (props) => {
     );
 }
 
-export default AddResidentForm;
+export default EditResidentForm;

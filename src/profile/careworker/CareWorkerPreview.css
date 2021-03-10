@@ -1,0 +1,57 @@
+
+.pharm-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 40px 20px;
+    border: 2px solid black;
+}
+
+.pharm-container.default {
+    background: goldenrod;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.icon-container > * {
+    margin: 10px;
+}
+
+.completed {
+    fill: gold;
+}
+
+.incomplete {
+    fill: grey;
+}
+
+.default-box {
+    width: 33%;
+    display: grid;
+    place-items: center;
+}
+
+.default-box {
+    font-size: 0.75em;
+}
+
+h4 {
+    margin: 0;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+path {
+    box-sizing: content-box;
+}

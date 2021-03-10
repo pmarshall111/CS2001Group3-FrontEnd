@@ -2,6 +2,8 @@ import React, { useState , useEffect} from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 import { backendUrl } from "../config";
+import TitleBar from "../shared/TitleBar";
+
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -79,8 +81,8 @@ function TodoList() {
 //return (<div>{listOfTodos}</div>)
 
   return (
-    
     <>
+    <TitleBar ></TitleBar>
       <h1>Today's Tasks</h1>
       <TodoForm onSubmit={addTodo} />
       <div>{listOfTodos}</div>
