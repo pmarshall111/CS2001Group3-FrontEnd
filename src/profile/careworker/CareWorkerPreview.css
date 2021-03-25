@@ -1,3 +1,21 @@
+.careworker-preview {
+    cursor: pointer;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.careworker-preview:nth-child(odd) {
+    background: #f5fbfc;
+}
+
+.careworker-preview:nth-child(even) {
+    background: #e6f2f5;
+}
+
+.careworker-preview:hover {
+    background: #a9d9e8;
+}
+
 
 .pharm-container {
     display: flex;

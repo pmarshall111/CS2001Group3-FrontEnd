@@ -33,8 +33,8 @@ const AddCareWorkerForm = (props) => {
                         />
                     </Form.Group>
                     <Form.Group controlId="formSurName">
-                        <Form.Label>Sur Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Sur Name"
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Last Name"
                             onChange={e => setSurName(e.target.value)} value={surName}
                         />
                     </Form.Group>

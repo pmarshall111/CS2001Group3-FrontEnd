@@ -73,7 +73,7 @@ const CareWorkerProfile = (props) => {
                     </div>
                     <div className="col-md-6">
                         <div className={"CareWorker-bio"}>
-                            <h1>Bio</h1>
+                            <h1>Notes</h1>
                             <p>{props.bio}</p>
                         </div>
                         {/* could add list of assigned to-dos */}

@@ -57,10 +57,14 @@ class EmailPage extends React.Component {
         // ]
         console.log(emails)
         let emailPreviews = emails.filter(x => emailType == "All" || x.status == emailType)
+            .sort((a,b) => b.dateLastEmailSent - a.dateLastEmailSent)
             .map((email,idx) =>
             <EmailPreview resident={email.residentName} medication={email.medicationName} pharmacy={email.pharmacyEmail} dateLastEmailSent={email.dateLastEmailSent}
                           dateResponded={email.dateUpdatedByPharmacy} dateMedicationToBeReady={email.dateMedicationToBeReady} inquiryComment={email.pharmacyComment}
-                          status={email.status} nonGuessableId={email.nonGuessableId} showEmailContent={() => this.showEmailContent(email.nonGuessableId)} key={idx} />
+                          status={email.status} nonGuessableId={email.nonGuessableId}
+                          showEmailContent={() => this.showEmailContent(email.nonGuessableId)} key={idx}
+                          getUpdatedEmails={() => this.getDataFromDb()}
+            />
         );
 
         return (

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 
+
 // import Button from "react-bootstrap/Button";
 // import {EnvelopeFill, HouseFill, TelephoneFill} from "react-bootstrap-icons";
 import Residentprofile from "./Residentprofile";
@@ -12,13 +13,9 @@ import "./ResidentPreview.css";
 const ResidentPreview = (props) => {
     const history = useHistory();
     return (
-        <Router>
-            <div>
-                <div onClick={() => history.push(`/resident/${props.resId}`)}>
-                    {props.firstName} {props.archived ? "[ARCHIVED]" : ""}
-                </div>
+            <div className={"resident-preview"} onClick={() => history.push(`/resident/${props.resId}`)}>
+                {props.firstName} {props.archived ? "[ARCHIVED]" : ""}
             </div>
-        </Router>
 
     );
 }

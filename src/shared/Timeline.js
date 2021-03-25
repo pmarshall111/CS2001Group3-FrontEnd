@@ -78,6 +78,9 @@ const Timeline = (props) => {
             .attr("width", rectWidth)
             .attr("y", height/2 - rectHeight/2)
             .attr("height", rectHeight)
+            .attr("fill", "#a9d9e8")
+            .attr("stroke", "black")
+            .style("border-radius", "2px")
             .on("mouseenter", (event,data) => {
                 const rectPosition = event.target.getBoundingClientRect();
                 setTargetX(rectPosition.x + rectPosition.width/2);

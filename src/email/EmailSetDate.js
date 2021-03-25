@@ -56,21 +56,21 @@ const EmailSetDate = (props) => {
     if (!isSubmitted) {
         return (
             <FullPageCentered background={"#ccf6c8"}>
-                <h2>Processing Medication</h2>
+                <h2>My Pharmacy can accept the Medication request!</h2>
                 <List items={inquiryDetails}>
                     <p>Date ready for collection:</p>
                     <input type={"date"} min={today} onChange={e => setReadyDate(e.target.value)} value={readyDate}/>
                 </List>
-                <Button variant="primary" onClick={e => submit(e)}>
-                    Let the care home know!
+                <Button variant="primary" onClick={e => submit(e)} style={{width: "auto !important", padding: "10px 20px"}}>
+                    Confirm and let the care home know!
                 </Button>
             </FullPageCentered>
         );
     } else {
         return (
             <FullPageCentered>
-                <h3>Confirmation sent to the care home that they can pick up the medication on:</h3>
-                <h3>{readyDate}</h3>
+                <h4>Confirmation sent to the care home that they can pick up the medication on:</h4>
+                <h4>{readyDate}</h4>
             </FullPageCentered>
         )
     }

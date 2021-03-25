@@ -12,13 +12,10 @@ import "./CareWorkerPreview.css";
 const CareWorkerPreview = (props) => {
     const history = useHistory();
     return (
-        <Router>
-            <div>
-                <div onClick={() => history.push(`/careWorker/${props.cwId}`)}>
+                <div className={"careworker-preview"} onClick={() => history.push(`/careWorker/${props.cwId}`)}>
                     {props.firstName} {props.archived ? "[ARCHIVED]" : ""}
                 </div>
-            </div>
-        </Router>
+
 
     );
 }

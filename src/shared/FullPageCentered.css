@@ -8,6 +8,13 @@
     display: grid;
     place-items: center;
     grid-gap: 50px;
+    min-width: 50vw;
+}
+
+.full-page-centered h4 {
+    display: block;
+    min-width: auto !important;
+    max-width: none !important;
 }
 
 .full-page-centered button {

@@ -1,3 +1,21 @@
+.resident-preview {
+    cursor: pointer;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.resident-preview:nth-child(odd) {
+    background: #f5fbfc;
+}
+
+.resident-preview:nth-child(even) {
+    background: #e6f2f5;
+}
+
+.resident-preview:hover {
+    background: #a9d9e8;
+}
+
 
 .pharm-container {
     display: flex;

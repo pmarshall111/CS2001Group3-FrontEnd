@@ -8,7 +8,7 @@ import {backendUrl} from "../config";
 import {dateIsYesterdayOrEarlier} from "../helper/dateHelper";
 
 const EmailPreview = (props) => {
-    const {resident, status, medication, pharmacy, dateLastEmailSent, dateResponded, dateMedicationToBeReady, inquiryComment, nonGuessableId} = props;
+    const {getUpdatedEmails, resident, status, medication, pharmacy, dateLastEmailSent, dateResponded, dateMedicationToBeReady, inquiryComment, nonGuessableId} = props;
 
     let backgroundColour;
     if (status === READY ) {
@@ -32,12 +32,12 @@ const EmailPreview = (props) => {
 
     const markCollected = () => {
         fetch(`${backendUrl}/email/collected?id=${nonGuessableId}`)
-            .then(r => r.json());
+            .then(r => getUpdatedEmails());
     }
 
     const undoMarkCollected = () => {
         fetch(`${backendUrl}/email/undo-collected?id=${nonGuessableId}`)
-            .then(r => r.json());
+            .then(r => getUpdatedEmails());
     }
 
     const lastEmailSentDate = new Date(dateLastEmailSent).toUTCString();
@@ -47,7 +47,7 @@ const EmailPreview = (props) => {
 
     let buttons;
     if (status === COMPLETE) {
-        buttons = <div className={"buttons-container"}><Button onClick={() => undoMarkCollected()} variant={"primary"}>Oops - not yet collected!</Button></div>
+        buttons = <div className={"buttons-container"}><Button onClick={() => undoMarkCollected()} variant={"primary"}>Undo</Button></div>
     } else if (status === READY) {
         buttons = <div className={"buttons-container"}><Button onClick={() => markCollected()} variant={"primary"}>I've collected this!</Button></div>
     } else {
@@ -65,7 +65,7 @@ const EmailPreview = (props) => {
             <div className={"email-data"}>
                 <p>Resident: </p><p>{resident}</p>
                 <p>Medication: </p><p>{medication}</p>
-                <p>Pharmacy: </p><p>{pharmacy}</p>
+                <p>Pharmacy Email: </p><p>{pharmacy}</p>
                 <p>Last email sent: </p><p>{lastEmailSentDate}</p>
                 <p>Pharmacy Responded: </p><p>{pharmacyResponded}</p>
                 <p>{status === INQUIRY ? "Inquiry comment: " : "Date ready: "}</p><p>{status === INQUIRY ? inquiryComment : readyDate}</p>

@@ -24,7 +24,7 @@ const MedicationCountPage = props => {
     const [showAddCountForm, setShowAddCountForm] = useState(false);
     const [residentsMedications, setResidentsMedications] = useState([])
 
-    const {resName, medName, resId, pharmacies} = props;
+    const {resName, medName, resId, pharmacies, updateResDosages} = props;
 
     useEffect(() => {
         getCounts();
@@ -59,7 +59,7 @@ const MedicationCountPage = props => {
       const {medCountId, count, countDoneOnDate, cyclePredictedToEndOn, medName,
           careWorkerName, isMorningCount,medForResId} = audit
       return(
-          <tr key={medCountId}>
+          <tr key={medCountId} className={"medication-row"}>
             <td>{medName}</td>
             <td>{convertToYYYYMMDD(countDoneOnDate)}</td>
               <td>{count}</td>
@@ -87,7 +87,7 @@ const MedicationCountPage = props => {
 
     return(
 
-        <div className="container" id ="main">
+        <main>
             <TitleBar title={`${resName}'s Medication Counts`}>
                 <Button onClick={() => setShowAddMedicationForm(true)}>Add new Medication</Button>
                 <Button onClick={() => setShowAddCountForm(true)}>Add new count</Button>
@@ -133,7 +133,9 @@ const MedicationCountPage = props => {
                 handleClose={() => setShowAddMedicationForm(false)}
                 handleSubmission={() => {
                     getMedications();
-                    setShowAddMedicationForm(false)}}
+                    setShowAddMedicationForm(false)
+                    updateResDosages();
+                }}
             />
             }
             {showAddCountForm && <MedicationCountForm
@@ -148,7 +150,7 @@ const MedicationCountPage = props => {
                 }}
             />
             }
-        </div>
+        </main>
     );
 
 }

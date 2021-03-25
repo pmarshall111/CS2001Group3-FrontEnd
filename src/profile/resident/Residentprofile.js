@@ -66,7 +66,7 @@ const Residentprofile = (props) => {
     }
 
     if (window.location.pathname.split("/")[3] === "medication") {
-        return <MedicationCountsPage resName={firstName} resId={resId} pharmacies={pharmacies} />
+        return <MedicationCountsPage updateResDosages={() => getResDosages()} resName={firstName} resId={resId} pharmacies={pharmacies} />
     }
 
     //oldImgSrc="https://i.imgur.com/MI2Pf2H.jpg"
@@ -94,7 +94,7 @@ const Residentprofile = (props) => {
                     </div>
                     <div className="col-md-6">
                         <div className={"resident-bio"}>
-                            <h1>Bio</h1>
+                            <h1>Notes</h1>
                             <p>{props.bio}</p>
                         </div>
                         <div>

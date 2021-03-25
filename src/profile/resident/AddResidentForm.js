@@ -30,13 +30,13 @@ const AddResidentForm = (props) => {
                 <Form>
                     <Form.Group controlId="formFirstName">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter first Name"
+                        <Form.Control type="text" placeholder="Enter First Name"
                             onChange={e => setFirstName(e.target.value)} value={firstName}
                         />
                     </Form.Group>
                     <Form.Group controlId="formSurName">
-                        <Form.Label>Sur Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Sur Name"
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Last Name"
                             onChange={e => setSurName(e.target.value)} value={surName}
                         />
                     </Form.Group>
@@ -53,8 +53,8 @@ const AddResidentForm = (props) => {
                         />
                     </Form.Group>
                     <Form.Group controlId="formBio">
-                        <Form.Label>Bio</Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Enter Bio"
+                        <Form.Label>Notes</Form.Label>
+                        <Form.Control as="textarea" rows={3} placeholder="Enter Any Notes..."
                             onChange={e => setBio(e.target.value)} value={bio}
                         />
                     </Form.Group>

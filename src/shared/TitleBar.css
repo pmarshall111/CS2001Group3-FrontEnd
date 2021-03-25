@@ -1,6 +1,6 @@
 .title-bar {
     width: 100%;
-    margin: 20px 0px;
+    margin: 0px 0px;
 }
 
 .title-bar > * {
@@ -11,6 +11,10 @@
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
+}
+
+.content-container h2 {
+
 }
 
 .content-container > div {

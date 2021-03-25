@@ -48,7 +48,7 @@ const EmailReadyForCollection = (props) => {
 
     return (
         <FullPageCentered>
-            <h3>{careHomeName} will be notified that {medication} is ready to collect now!</h3>
+            <h4>{careHomeName} will be notified that {medication} is ready to collect now!</h4>
         </FullPageCentered>
     )
 }

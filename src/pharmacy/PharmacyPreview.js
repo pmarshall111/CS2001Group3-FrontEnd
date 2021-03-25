@@ -6,7 +6,10 @@ import "./PharmacyPreview.css";
 
 const PharmacyPreview = (props) => (
     <div className={`pharm-container`}>
-        <h4>{props.title}</h4>
+            <div className={"info-container"}>
+            <h4>{props.title}</h4>
+            <h6>{props.hasEmail ? props.hasEmail : ""}</h6>
+            </div>
         <div className={"icon-container"}>
                 <TelephoneFill className={props.hasPhone ? "completed" : "incomplete"} />
                 <HouseFill className={props.hasAddress ? "completed" : "incomplete"} />

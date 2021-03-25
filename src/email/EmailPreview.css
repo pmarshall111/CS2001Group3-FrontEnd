@@ -45,3 +45,7 @@
     display: grid;
     align-items: center;
 }
+
+.buttons-container button {
+    padding: 20px;
+}

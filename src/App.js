@@ -28,6 +28,8 @@ import Residentprofile from "./profile/resident/Residentprofile";
 import AddMedication from "./medication/medication/AddMedication";
 import MedicationCountForm from "./medication/audit/MedicationCountForm";
 import MedicationCountPage from "./medication/viewAudit/MedicationCountPage";
+import {Navbar} from "react-bootstrap";
+import NavbarCentreTitle from "./shared/NavbarCentreTitle";
 
 class App extends React.Component {
     constructor(props) {
@@ -38,6 +40,80 @@ class App extends React.Component {
             careHomeWorker:"Peter",
             medicationDoses: []
         }
+    }
+
+    render() {
+        const practiceTimelineData = [
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Jimmy"},
+            {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+            {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"},
+            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(20)), resident: "Tom"},
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Rebecca" },
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(16)), resident: "Rebecca" },
+            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(20)), resident: "Rebecca"}
+        ]
+
+        // const medicationsAtTime = [
+        //     {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+        //     {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
+        //     {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+        //     {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"}
+        // ]
+
+        const medicationsAtTime = [
+            {medicationName: "Tylenol", dose: "15ml", time: new Date(new Date().setHours(9)), resident: "Rebecca"},
+            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
+            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
+            {medicationName: "Deep Heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Rebecca"}
+        ]
+
+        return (
+            <div>
+                <Router>
+                    <Route exact path = "/" component={NavbarCentreTitle} />
+                    <Route exact path = "/email" component={NavbarCentreTitle} />
+                    <Route path = "/resident" component={NavbarCentreTitle} />
+                    <Route path = "/careWorker" component={NavbarCentreTitle} />
+                    <Route path = "/pharmacy" component={NavbarCentreTitle} />
+                    <Route path = "/alerts" component={NavbarCentreTitle} />
+                </Router>
+                <Router>
+                    <Route exact path="/" render={(props) => <Dashboard />} />
+                    <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
+                    <Route exact path="/email" component={EmailPage} />
+                    <Route path="/resident" render={ ()=> <ResidentsList careHomeId={this.state.careHome.id} pharmacies={this.state.pharmacies} /> } />
+                    <Route path="/careWorker" render={ ()=> <CareWorkerList careHomeId={this.state.careHome.id} /> } />
+                    <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
+                    <Route path="/email/set-date" component={EmailSetDate} />
+                    <Route path="/email/inquiry" component={EmailInquiry} />
+                    <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
+                    <Route path="/pharmacy" render={(props) =>
+                        <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id}
+                                      pharmaciesHaveChanged={() => this.getPharmacies(this.state.careHome.id)} />
+                    } />
+                    <Route path="/alerts" render={(props) =>
+                        <AlertsPage {...props}
+                                    careHomeName={this.state.careHome.name}
+                                    careHomeWorker={this.state.careHomeWorker}
+                                    careHomeEmail={this.state.careHome.email}
+                                    careHomeId={this.state.careHome.id}
+                        />
+                    } />
+                    <Route path="/medication-form" render={(props) => <NewMedicationForm {...props} resId={0} pharmacies={this.state.pharmacies} />} />
+                    <Route path="/timeline" render={(props) =>
+                        <div>
+                            <Timeline dosages={this.state.medicationDoses} />
+                        </div>
+                    } />
+                    <Route path='/addMedication' component={AddMedication} />
+                    <Route path='/audit' component={MedicationCountForm} />
+                    <Route path='/view' component={MedicationCountPage} />
+                </Router>
+            </div>
+
+    );
     }
 
     componentDidMount() {
@@ -72,69 +148,6 @@ class App extends React.Component {
                 console.log({pharmacies: JSON.parse(response)})
                 this.setState({pharmacies: JSON.parse(response)})
             })
-    }
-
-    render() {
-        const practiceTimelineData = [
-            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
-            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Jimmy"},
-            {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
-            {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"},
-            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(20)), resident: "Tom"},
-            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
-            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(13)), resident: "Rebecca" },
-            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(16)), resident: "Rebecca" },
-            {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(20)), resident: "Rebecca"}
-        ]
-
-        // const medicationsAtTime = [
-        //     {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
-        //     {medicationName: "Deep heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Jimmy"},
-        //     {medicationName: "Tylenol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca"},
-        //     {medicationName: "Ibuprofen", dose: 1, time:new Date(new Date().setHours(9)), resident: "Tom"}
-        // ]
-
-        const medicationsAtTime = [
-            {medicationName: "Tylenol", dose: "15ml", time: new Date(new Date().setHours(9)), resident: "Rebecca"},
-            {medicationName: "Ibuprofen", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
-            {medicationName: "Paracetamol", dose: 2, time: new Date(new Date().setHours(9)), resident: "Rebecca" },
-            {medicationName: "Deep Heat", dose: 1, time: new Date(new Date().setHours(9)), resident: "Rebecca"}
-        ]
-
-        return (
-            <Router>
-                <Route exact path="/" render={(props) => <Dashboard />} />
-                <Route exact path="/file-upload" render={(props) => <FileUploadBtn isResident={true} id={1} />} />
-                <Route exact path="/email" component={EmailPage} />
-                <Route path="/resident" render={ ()=> <ResidentsList careHomeId={this.state.careHome.id} pharmacies={this.state.pharmacies} /> } />
-                <Route path="/careWorker" render={ ()=> <CareWorkerList careHomeId={this.state.careHome.id} /> } />
-                <Route path="/medication-temp" render={(props) => <Medication_TEMP pharmacies={this.state.pharmacies} />} />
-                <Route path="/email/set-date" component={EmailSetDate} />
-                <Route path="/email/inquiry" component={EmailInquiry} />
-                <Route path="/email/ready-to-collect" component={EmailReadyForCollection} />
-                <Route path="/pharmacy" render={(props) =>
-                    <PharmacyPage {...props} pharmacies={this.state.pharmacies} careHomeId={this.state.careHome.id}
-                                  pharmaciesHaveChanged={() => this.getPharmacies(this.state.careHome.id)} />
-                } />
-                <Route path="/alerts" render={(props) =>
-                    <AlertsPage {...props}
-                                careHomeName={this.state.careHome.name}
-                                careHomeWorker={this.state.careHomeWorker}
-                                careHomeEmail={this.state.careHome.email}
-                                careHomeId={this.state.careHome.id}
-                    />
-                } />
-                <Route path="/medication-form" render={(props) => <NewMedicationForm {...props} resId={0} pharmacies={this.state.pharmacies} />} />
-                <Route path="/timeline" render={(props) =>
-                    <div>
-                        <Timeline dosages={this.state.medicationDoses} />
-                    </div>
-                } />
-                <Route path='/addMedication' component={AddMedication} />
-                <Route path='/audit' component={MedicationCountForm} />
-                <Route path='/view' component={MedicationCountPage} />
-            </Router>
-        );
     }
 }
 

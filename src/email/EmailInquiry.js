@@ -59,7 +59,7 @@ const EmailInquiry = (props) => {
     } else {
         return (
             <FullPageCentered>
-                <h3>Inquiry submitted to the care home with the comment:</h3>
+                <h4>Inquiry submitted to the care home with the comment:</h4>
                 <Quote quote={comment} />
             </FullPageCentered>
         )

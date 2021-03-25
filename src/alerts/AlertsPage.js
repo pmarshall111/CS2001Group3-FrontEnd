@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import {backendUrl} from "../config";
 import Form from "react-bootstrap/Form";
 import {convertToYYYYMMDD} from "../helper/convertTimestampToDate";
+import {dateDiff} from "../helper/dateHelper";
 
 
 //alerts will be for any medication that hasn't had an email request sent off yet.
@@ -13,18 +14,7 @@ class AlertsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            alerts: [{
-                    "medicationName": "IbuProfen",
-                    "residentName": "Irene Wilder",
-                    "cycleEndDate": 1461920400000,
-                    "pharmacyEmail": "pmarshall.dev@gmail.com"
-                },
-                {
-                    "medicationName": "Paracetamol",
-                    "residentName": "Gerald",
-                    "cycleEndDate": 1464920400000,
-                    "pharmacyEmail": "pmarshall.dev@gmail.com"
-                }],
+            alerts: [],
             usesAutomaticEmails: false,
             intervalId: -1
         }
@@ -36,11 +26,11 @@ class AlertsPage extends React.Component {
         })
     }
 
-    sendEmail(medicationName, residentName, cycleEndDate, pharmacyEmail) {
-        const {careHomeName, careHomeWorker, careHomeEmail} = this.props;
-        const backendData = {medicationName, residentName, cycleEndDate, pharmacyEmail, careHomeName, careWorkerName: careHomeWorker, careHomeEmail, usersName: careHomeName}
+    sendEmail(alertId) {
+        const backendData = {alertId}
         fetch(`${backendUrl}/email`,
-            {method: "POST", body: JSON.stringify(backendData), headers: {"Content-Type": "application/json"}});
+            {method: "POST", body: JSON.stringify(backendData), headers: {"Content-Type": "application/json"}})
+            .then(() => this.getAlertsFromDb());
     }
 
     updateUsesAutomaticEmails() {
@@ -56,7 +46,9 @@ class AlertsPage extends React.Component {
         //to get data from DB
         fetch(`${backendUrl}/auto-email?careHomeId=${this.props.careHomeId}`)
             .then(resp => resp.json())
-            .then(r => this.setState({usesAutomaticEmails: r.usesAutomaticEmails}))
+            .then(r => {
+                this.setState({usesAutomaticEmails: r.usesAutomaticEmails})
+            })
         this.getAlertsFromDb();
         this.setState({intervalId: setInterval(() => this.getAlertsFromDb(), 60000)}) //check every minute
     }
@@ -68,24 +60,29 @@ class AlertsPage extends React.Component {
     getAlertsFromDb() {
         fetch(`${backendUrl}/alerts?careHomeId=${this.props.careHomeId}`)
             .then(resp => resp.json())
-            .then(r => this.setState({alerts: r}))
+            .then(r => {
+                console.log({r})
+                this.setState({alerts: r})
+            })
     }
 
 
     render() {
         const { alerts } = this.state;
+
         const alertItems = alerts.map((a,idx) =>
             <AlertItem
                 medicationName={a.medicationName}
                 residentName={a.residentName}
-                timeTillCycleEnd={convertToYYYYMMDD(a.cycleEndDate)}
+                timeTillCycleEnd={dateDiff(new Date(), a.cycleEndDate)}
+                pharmacyEmail={a.pharmacyEmail}
                 key={`alerts-${idx}`}
-                sendEmail={() => this.sendEmail(a.medicationName, a.residentName, a.cycleEndDate, a.pharmacyEmail)}
+                sendEmail={() => this.sendEmail(a.alertId)}
             />
         )
 
         return (
-            <div>
+            <main>
                 <TitleBar title={"Alerts"}>
                     <Form.Check type={"switch"}
                                 id={"auto-email-switch"}
@@ -98,7 +95,7 @@ class AlertsPage extends React.Component {
                 <div className={"list"}>
                     {alertItems}
                 </div>
-            </div>
+            </main>
         );
     }
 }

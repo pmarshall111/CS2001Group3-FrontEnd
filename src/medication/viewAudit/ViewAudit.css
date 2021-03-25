@@ -6,6 +6,19 @@ div.container {
   padding-left: 2px;
 }
 
+.medication-row:nth-child(odd) {
+  background: #f5fbfc;
+}
+
+.medication-row:nth-child(even) {
+  background: #e6f2f5;
+}
+
+.table-responsive {
+  display: grid;
+  place-items: center;
+  width: 90%
+}
 
 div.DatePicker{
   color: #cef2f0;
